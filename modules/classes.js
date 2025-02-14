@@ -8,6 +8,6 @@ export class Game {
     this.strategy = strategy;
   }
   playScene() {
-    return this.strategy();
+    return this.strategy;
   }
 }

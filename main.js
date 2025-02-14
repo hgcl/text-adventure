@@ -1,4 +1,4 @@
-import { Game } from "./modules/game.js";
+import { Game } from "./modules/classes.js";
 import { scenes } from "./modules/scenes.js";
 
 // Init new game variables
