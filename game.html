@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Text adventure</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <h1 id="curr-scene">Current scene</h1>
+    <p id="curr-description">Current description</p>
+    <button id="action-1">Action</button>
+    <script>
+      // Init Game class and its methods
+      function Game(strategy) {
+        this.strategy = strategy;
+      }
+      Game.prototype.playScene = function () {
+        return this.strategy();
+      };
+
+      // Scenes
+      let scene1 = function () {
+        console.log("Scene 1 logic here");
+
+        // based upon some conditions return next scene
+        // let's keep it simple and just return scene2
+        return {
+          location: "Uncle's house",
+          description: "Hellooooo",
+          next: scene2,
+        };
+      };
+
+      let scene2 = function () {
+        console.log("Scene 2 logic here");
+        return {
+          location: "Outside",
+          description: "Another description",
+          next: scene3,
+        };
+      };
+
+      let scene3 = function () {
+        console.log("Scene 3 logic here");
+        return {
+          location: "XXX",
+          description: "XXX",
+          next: scene1,
+        };
+      };
+
+      // Init new game variables
+      let game = new Game(scene1);
+      let scene;
+
+      const currSceneEl = document.getElementById("curr-scene");
+      const currDescriptionEl = document.getElementById("curr-description");
+      const actionEl1 = document.getElementById("action-1");
+
+      function newScene() {
+        // Set scene
+        scene = game.playScene();
+
+        currSceneEl.textContent = scene.location;
+        currDescriptionEl.textContent = scene.description;
+      }
+
+      actionEl1.addEventListener("click", (e) => {
+        if (scene.next !== undefined) {
+          game = new Game(scene.next);
+          newScene();
+        }
+      });
+
+      newScene();
+    </script>
+  </body>
+</html>
