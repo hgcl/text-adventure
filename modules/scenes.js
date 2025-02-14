@@ -20,7 +20,7 @@ export const scenes = {
       "You find an old key on a table and a window that is slightly ajar. What do you do?",
     next: "scene3",
     choices: [
-      { name: "Take the key", next: "scene3" },
+      { name: "Take the key", next: "scene1" },
       { name: "Open the window", next: "scene3" },
     ],
   },
