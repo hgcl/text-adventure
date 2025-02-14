@@ -1,13 +1,11 @@
 /**
  * Create `Game` class and its methods
- *
- * @param {*} strategy
  */
 export class Game {
-  constructor(strategy) {
-    this.strategy = strategy;
+  constructor(scene) {
+    this.scene = scene;
   }
   playScene() {
-    return this.strategy;
+    return this.scene;
   }
 }
