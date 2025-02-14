@@ -2,7 +2,7 @@ import { Game } from "./modules/classes.js";
 import { scenes } from "./modules/scenes.js";
 
 // Init new game variables
-let game = new Game(scenes[0]);
+let game = new Game(scenes.scene1);
 let scene;
 
 const currSceneEl = document.getElementById("curr-scene");
@@ -18,10 +18,10 @@ function newScene() {
 }
 
 actionEl1.addEventListener("click", (e) => {
-  if (scene.next !== undefined) {
-    game = new Game(scene.next);
-    newScene();
-  }
+  // if (scene.next !== undefined) {
+  game = new Game(scenes[scene.next]);
+  newScene();
+  // }
 });
 
 newScene();

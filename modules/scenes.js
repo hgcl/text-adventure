@@ -2,34 +2,37 @@
  * Scenes
  */
 
-let scene1 = function () {
-  console.log("Scene 1 logic here");
-
-  // based upon some conditions return next scene
-  // let's keep it simple and just return scene2
-  return {
+export const scenes = {
+  // Scene 1: Introduction
+  scene1: {
     location: "Uncle's house",
-    description: "Hellooooo",
-    next: scene2,
-  };
-};
-
-let scene2 = function () {
-  console.log("Scene 2 logic here");
-  return {
-    location: "Outside",
-    description: "Another description",
-    next: scene3,
-  };
-};
-
-let scene3 = function () {
-  console.log("Scene 3 logic here");
-  return {
+    description: "You wake up in a mysterious room. What do you do?",
+    next: "scene2",
+    choices: [
+      { name: "Look around", next: "scene2" },
+      { name: "Open the door", next: "scene2" },
+    ],
+  },
+  // Scene 2: Sidewalk
+  scene2: {
+    location: "Sidewalk",
+    description:
+      "You find an old key on a table and a window that is slightly ajar. What do you do?",
+    next: "scene3",
+    choices: [
+      { name: "Take the key", next: "scene3" },
+      { name: "Open the window", next: "scene3" },
+    ],
+  },
+  // Scene 3: XXX
+  scene3: {
     location: "XXX",
-    description: "XXX",
-    next: scene1,
-  };
+    description:
+      "You find an old key on a table and a window that is slightly ajar. What do you do?",
+    next: "scene1",
+    choices: [
+      { name: "Take the key", next: "scene1" },
+      { name: "Open the window", next: "scene1" },
+    ],
+  },
 };
-
-export const scenes = [scene1, scene2, scene3];
