@@ -7,10 +7,13 @@ export const scenes = {
   scene1: {
     location: "Uncle's house",
     description: "You wake up in a mysterious room. What do you do?",
-    next: "scene2",
     choices: [
-      { name: "Look around", next: "scene2" },
-      { name: "Open the door", next: "scene2" },
+      {
+        name: "Buy plant",
+        inventory: { name: "A plant", points: 2 },
+        next: "scene2",
+      },
+      { name: "Go to scene 2", points: 1, next: "scene2" },
     ],
   },
   // Scene 2: Sidewalk
@@ -18,21 +21,22 @@ export const scenes = {
     location: "Sidewalk",
     description:
       "You find an old key on a table and a window that is slightly ajar. What do you do?",
-    next: "scene3",
     choices: [
-      { name: "Take the key", next: "scene1" },
-      { name: "Open the window", next: "scene3" },
+      {
+        name: "Take the hat",
+        inventory: { name: "A hat", points: 3 },
+        next: "scene1",
+      },
+      { name: "Go to scene 3", points: 2, next: "scene3" },
     ],
   },
   // Scene 3: XXX
   scene3: {
     location: "XXX",
-    description:
-      "You find an old key on a table and a window that is slightly ajar. What do you do?",
-    next: "scene1",
+    description: "Some other description here.",
     choices: [
-      { name: "Take the key", next: "scene1" },
-      { name: "Open the window", next: "scene1" },
+      { name: "Give item", points: 3, next: "scene1" },
+      { name: "Go to scene 1", points: 3, next: "scene1" },
     ],
   },
 };

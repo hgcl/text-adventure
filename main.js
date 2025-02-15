@@ -1,15 +1,17 @@
-import { Game } from "./modules/classes.js";
+import { Game, Character } from "./modules/classes.js";
 import { scenes } from "./modules/scenes.js";
 
 /**
  * Define game initial variables
  */
 let game = new Game(scenes.scene1);
+let player = new Character(0, 0, []);
 let scene;
 
 const currSceneEl = document.getElementById("curr-scene");
 const currDescriptionEl = document.getElementById("curr-description");
 const currChoicesEl = document.getElementById("curr-choices");
+const inventoryEl = document.getElementById("inventory");
 
 /**
  * Generate new scene
@@ -35,9 +37,29 @@ function newScene() {
  * Click on one of the different choices
  */
 currChoicesEl.addEventListener("click", (e) => {
-  // Get next scene
-  const choiceIndex = e.target.getAttribute("data-index");
-  const nextScene = scenes[scene.choices[choiceIndex].next];
+  // Get next scene (based on choice index)
+  const index = e.target.getAttribute("data-index");
+  const nextScene = scenes[scene.choices[index].next];
+  // Console log choice
+  console.log("[ Clicked on: " + scene.choices[index].name + " ]");
+  // Earn points?
+  const newPoints = scene.choices[index].points;
+  if (newPoints !== undefined) {
+    console.log("+" + newPoints + " point(s)");
+    player.addPoints(newPoints);
+  }
+  // Gain inventory items?
+  const newItems = scene.choices[index].inventory;
+  if (newItems !== undefined) {
+    console.log("+ " + newItems.name);
+    player.addItem(newItems);
+  }
+  // Update inventory in UI
+  let par = document.createElement("p");
+  par.innerHTML = newItems.name;
+  inventoryEl.appendChild(par);
+  // Record potential points for item
+  par.setAttribute("data-points", newItems.points);
 
   // Clear all previous choices (buttons)
   currChoicesEl.replaceChildren();
@@ -46,7 +68,9 @@ currChoicesEl.addEventListener("click", (e) => {
   if (nextScene !== undefined) {
     game = new Game(nextScene);
     newScene();
+    console.log("===> NEW SCENE: " + nextScene.location);
   }
 });
 
 newScene();
+console.log("===> START SCENE: " + scene.location);
