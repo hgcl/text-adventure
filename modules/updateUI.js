@@ -17,13 +17,15 @@ export function updateUI(element, object) {
 
     case "description":
       currDescriptionEl.replaceChildren(); // reset to zero
-      const descriptionArray = object.description.split(/\n/);
+      const descriptionArray = object.description.split(/\n\n/);
       descriptionArray.forEach((line) => {
-        // Replace {{xxx}} placeholders with actual buttons
+        // Replace `{{xxx}}` placeholders with actual buttons
         line = line.replaceAll(
           /{{(.*?)}}/g,
           `<button id="$1" class="options">$1<\/button>`
         );
+        // Replace `_xxx_` placeholders with empasized tag
+        line = line.replaceAll(/_(.*?)_/g, `<em>$1<\/em>`);
         let p = document.createElement("p");
         p.innerHTML = line;
         currDescriptionEl.appendChild(p);
