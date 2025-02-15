@@ -87,11 +87,10 @@ currChoicesEl.addEventListener("click", (e) => {
 newScene();
 
 /**
- * Specific stuff
+ * Scene-specific JS
  */
 
 // Choose player age
-
 const optionsEls = document.querySelectorAll(".options");
 optionsEls.forEach((option) =>
   option.addEventListener("click", (e) => {
