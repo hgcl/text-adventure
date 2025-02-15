@@ -19,13 +19,22 @@ const pointsEl = document.getElementById("points");
 function newScene() {
   console.log("===> NEW SCENE: " + scene.location);
 
+  // Update UI (location)
   currSceneEl.textContent = scene.location;
-  currDescriptionEl.textContent = scene.description;
 
-  // Create a button for each choice and record its index number
+  // Update UI (description)
+  const descriptionArray = scene.description.split(/\n/);
+  currDescriptionEl.replaceChildren();
+  descriptionArray.forEach((line) => {
+    let p = document.createElement("p");
+    p.textContent = line;
+    currDescriptionEl.appendChild(p);
+  });
+
+  // Create a button for each choice and record its index number in `data-index`
   for (let i = 0; i < scene.choices.length; i++) {
     let btn = document.createElement("button");
-    btn.innerHTML = scene.choices[i].name;
+    btn.textContent = scene.choices[i].name;
     currChoicesEl.appendChild(btn);
     // Record choice index number in `data-index` attribute
     btn.setAttribute("data-index", i);
@@ -62,7 +71,7 @@ currChoicesEl.addEventListener("click", (e) => {
   inventoryEl.replaceChildren();
   player.inventory.forEach((item) => {
     let span = document.createElement("span");
-    span.innerHTML = item.name;
+    span.textContent = item.name;
     inventoryEl.appendChild(span);
   });
 
@@ -85,3 +94,4 @@ newScene();
 window.player = player;
 window.scene = scene;
 window.scenes = scenes;
+window.currDescriptionEl = currDescriptionEl;
