@@ -8,11 +8,11 @@ export class Character {
     this.inventory = inventory;
   }
   addPoints(point) {
-    this.points = this.points + point;
-    console.log("Total points: " + this.points);
+    this.points += point;
+    // alert(`You earned ${point} point(s)!`);
   }
   addItem(item) {
     this.inventory.push(item);
-    console.log("Full inventory: " + JSON.stringify(this.inventory));
+    // alert(`You added ${item.name} to your inventory!`);
   }
 }

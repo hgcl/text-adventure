@@ -11,7 +11,7 @@ export const scenes = {
     choices: [
       {
         name: "Buy plant",
-        inventory: { name: "A plant", points: 2 },
+        inventory: { name: "a plant", points: 2 },
         next: "scene2",
       },
       { name: "Go to scene 2", points: 1, next: "scene2" },
@@ -25,7 +25,7 @@ export const scenes = {
     choices: [
       {
         name: "Take the hat",
-        inventory: { name: "A hat", points: 3 },
+        inventory: { name: "a hat", points: 3 },
         next: "scene1",
       },
       { name: "Go to scene 3", points: 2, next: "scene3" },
