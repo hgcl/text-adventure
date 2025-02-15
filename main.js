@@ -1,5 +1,6 @@
 import { Character } from "./modules/classes.js";
 import { scenes } from "./modules/scenes.js";
+import { updateUI } from "./modules/updateUI.js";
 
 /**
  * Define game initial variables
@@ -7,11 +8,7 @@ import { scenes } from "./modules/scenes.js";
 let player = new Character(0, 0, []);
 let scene = scenes.scene1;
 
-const currSceneEl = document.getElementById("curr-scene");
-const currDescriptionEl = document.getElementById("curr-description");
 const currChoicesEl = document.getElementById("curr-choices");
-const inventoryEl = document.getElementById("inventory");
-const pointsEl = document.getElementById("points");
 
 /**
  * Generate new scene
@@ -19,17 +16,9 @@ const pointsEl = document.getElementById("points");
 function newScene() {
   console.log("===> NEW SCENE: " + scene.location);
 
-  // Update UI (location)
-  currSceneEl.textContent = scene.location;
-
-  // Update UI (description)
-  const descriptionArray = scene.description.split(/\n/);
-  currDescriptionEl.replaceChildren();
-  descriptionArray.forEach((line) => {
-    let p = document.createElement("p");
-    p.textContent = line;
-    currDescriptionEl.appendChild(p);
-  });
+  // Update UI (location and description)
+  updateUI("location", scene);
+  updateUI("description", scene);
 
   // Create a button for each choice and record its index number in `data-index`
   for (let i = 0; i < scene.choices.length; i++) {
@@ -73,7 +62,7 @@ currChoicesEl.addEventListener("click", (e) => {
   }
 
   // Update UI (total points)
-  pointsEl.textContent = player.points;
+  updateUI("points", player);
 
   // Gain inventory items?
   const newItems = scene.choices[index].inventory;
@@ -83,12 +72,7 @@ currChoicesEl.addEventListener("click", (e) => {
   }
 
   // Update UI (inventory)
-  inventoryEl.replaceChildren();
-  player.inventory.forEach((item) => {
-    let span = document.createElement("span");
-    span.textContent = item.name;
-    inventoryEl.appendChild(span);
-  });
+  updateUI("inventory", player);
 
   // Clear all previous choices (buttons)
   currChoicesEl.replaceChildren();
@@ -109,4 +93,3 @@ newScene();
 window.player = player;
 window.scene = scene;
 window.scenes = scenes;
-window.currDescriptionEl = currDescriptionEl;
