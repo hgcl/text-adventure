@@ -36,7 +36,11 @@ export const scenes = {
     location: "XXX",
     description: "Some other description here.",
     choices: [
-      { name: "Give item", points: 3, next: "scene1" },
+      {
+        name: "Give item",
+        emptyInventory: true,
+        next: "scene1",
+      },
       { name: "Go to scene 1", points: 3, next: "scene1" },
     ],
   },

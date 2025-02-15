@@ -53,11 +53,25 @@ currChoicesEl.addEventListener("click", (e) => {
   console.log("[ Clicked on: " + scene.choices[index].name + " ]");
 
   // Earn points?
-  const newPoints = scene.choices[index].points;
-  if (newPoints !== undefined) {
+  let newPoints = scene.choices[index].points;
+  if (
+    (newPoints !== undefined) |
+    (scene.choices[index].emptyInventory === true)
+  ) {
+    // Empty inventory to earn points?
+    if (scene.choices[index].emptyInventory === true) {
+      // Count points
+      newPoints = 0;
+      player.inventory.forEach((item) => {
+        newPoints += item.points;
+      });
+      // Reset inventory
+      player.inventory = [];
+    }
     console.log("+" + newPoints + " point(s)");
     player.addPoints(newPoints);
   }
+
   // Update UI (total points)
   pointsEl.textContent = player.points;
 
@@ -67,6 +81,7 @@ currChoicesEl.addEventListener("click", (e) => {
     console.log("+ " + newItems.name);
     player.addItem(newItems);
   }
+
   // Update UI (inventory)
   inventoryEl.replaceChildren();
   player.inventory.forEach((item) => {
