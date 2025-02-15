@@ -87,6 +87,28 @@ currChoicesEl.addEventListener("click", (e) => {
 newScene();
 
 /**
+ * Specific stuff
+ */
+
+// Choose player age
+
+const optionsEls = document.querySelectorAll(".options");
+optionsEls.forEach((option) =>
+  option.addEventListener("click", (e) => {
+    // Set player age
+    player.age = e.target.innerHTML;
+
+    // Remove non-selected buttons
+    let selectedId = e.target.getAttribute("id");
+    optionsEls.forEach((x) => {
+      if (x.getAttribute("id") !== selectedId) {
+        x.setAttribute("hidden", "true");
+      }
+    });
+  })
+);
+
+/**
  * Make some variables accessible via DevTools
  */
 

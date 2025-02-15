@@ -19,8 +19,13 @@ export function updateUI(element, object) {
       currDescriptionEl.replaceChildren(); // reset to zero
       const descriptionArray = object.description.split(/\n/);
       descriptionArray.forEach((line) => {
+        // Replace {{xxx}} placeholders with actual buttons
+        line = line.replaceAll(
+          /{{(.*?)}}/g,
+          `<button id="$1" class="options">$1<\/button>`
+        );
         let p = document.createElement("p");
-        p.textContent = line;
+        p.innerHTML = line;
         currDescriptionEl.appendChild(p);
       });
       break;

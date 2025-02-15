@@ -6,8 +6,7 @@ export const scenes = {
   // Scene 1: Introduction
   scene1: {
     location: "Uncle's house",
-    description:
-      "First sentence.\nYou are staying at the house of your overprotective uncle.",
+    description: `{{15}} or {{25}} {{35}} what?\nYou are staying at the house of your overprotective uncle.`,
     choices: [
       {
         name: "Buy plant",
