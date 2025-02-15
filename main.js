@@ -10,7 +10,6 @@ let scene;
 const currSceneEl = document.getElementById("curr-scene");
 const currDescriptionEl = document.getElementById("curr-description");
 const currChoicesEl = document.getElementById("curr-choices");
-const actionEl1 = document.getElementById("action-1");
 
 /**
  * Generate new scene
@@ -27,8 +26,8 @@ function newScene() {
     let btn = document.createElement("button");
     btn.innerHTML = scene.choices[i].name;
     currChoicesEl.appendChild(btn);
-    // Indicate next scene in `data-next` attribute
-    btn.setAttribute("data-next", scene.choices[i].next);
+    // Record choice index number in `data-index` attribute
+    btn.setAttribute("data-index", i);
   }
 }
 
@@ -36,16 +35,16 @@ function newScene() {
  * Click on one of the different choices
  */
 currChoicesEl.addEventListener("click", (e) => {
-  // Get next scene from `data-next` attribute
-  const nextScene = e.target.getAttribute("data-next");
+  // Get next scene
+  const choiceIndex = e.target.getAttribute("data-index");
+  const nextScene = scenes[scene.choices[choiceIndex].next];
 
   // Clear all previous choices (buttons)
   currChoicesEl.replaceChildren();
 
   // Set the next scene
-  if (scenes[scene.next] !== undefined) {
-    game = new Game(scenes[nextScene]);
-
+  if (nextScene !== undefined) {
+    game = new Game(nextScene);
     newScene();
   }
 });
