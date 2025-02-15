@@ -11,6 +11,7 @@ const currSceneEl = document.getElementById("curr-scene");
 const currDescriptionEl = document.getElementById("curr-description");
 const currChoicesEl = document.getElementById("curr-choices");
 const inventoryEl = document.getElementById("inventory");
+const pointsEl = document.getElementById("points");
 
 /**
  * Generate new scene
@@ -48,6 +49,8 @@ currChoicesEl.addEventListener("click", (e) => {
     console.log("+" + newPoints + " point(s)");
     player.addPoints(newPoints);
   }
+  // Update UI (total points)
+  pointsEl.textContent = player.points;
 
   // Gain inventory items?
   const newItems = scene.choices[index].inventory;
@@ -55,12 +58,12 @@ currChoicesEl.addEventListener("click", (e) => {
     console.log("+ " + newItems.name);
     player.addItem(newItems);
   }
-  // Update inventory in UI
+  // Update UI (inventory)
   inventoryEl.replaceChildren();
   player.inventory.forEach((item) => {
-    let par = document.createElement("p");
-    par.innerHTML = item.name;
-    inventoryEl.appendChild(par);
+    let span = document.createElement("span");
+    span.innerHTML = item.name;
+    inventoryEl.appendChild(span);
   });
 
   // Clear all previous choices (buttons)
@@ -79,6 +82,6 @@ newScene();
  * Make some variables accessible via DevTools
  */
 
-// window.player = player;
-// window.scene = scene;
-// window.scenes = scenes;
+window.player = player;
+window.scene = scene;
+window.scenes = scenes;
