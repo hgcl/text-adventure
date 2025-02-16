@@ -8,7 +8,7 @@ import { updateUI } from "./modules/updateUI.js";
 let player = new Character(0, 0, []);
 let scene = scenes.scene1;
 
-const currChoicesEl = document.getElementById("curr-choices");
+const choicesEl = document.getElementById("choices");
 
 /**
  * Generate new scene
@@ -16,7 +16,8 @@ const currChoicesEl = document.getElementById("curr-choices");
 function newScene() {
   console.log("===> NEW SCENE: " + scene.location);
 
-  // Update UI (location and description)
+  // Update UI (scene, location and description)
+  updateUI("scene", scene);
   updateUI("location", scene);
   updateUI("description", scene);
 
@@ -24,7 +25,7 @@ function newScene() {
   for (let i = 0; i < scene.choices.length; i++) {
     let btn = document.createElement("button");
     btn.textContent = scene.choices[i].name;
-    currChoicesEl.appendChild(btn);
+    choicesEl.appendChild(btn);
     // Record choice index number in `data-index` attribute
     btn.setAttribute("data-index", i);
   }
@@ -33,7 +34,7 @@ function newScene() {
 /**
  * Click on one of the different choices
  */
-currChoicesEl.addEventListener("click", (e) => {
+choicesEl.addEventListener("click", (e) => {
   // Get next scene object (based on choice index)
   const index = e.target.getAttribute("data-index");
   const nextScene = scenes[scene.choices[index].next];
@@ -80,7 +81,7 @@ currChoicesEl.addEventListener("click", (e) => {
   updateUI("inventory", player);
 
   // Clear all previous choices (buttons)
-  currChoicesEl.replaceChildren();
+  choicesEl.replaceChildren();
 
   // Set the next scene
   if (nextScene !== undefined) {
@@ -92,16 +93,17 @@ currChoicesEl.addEventListener("click", (e) => {
 newScene();
 
 /**
- * Scene-specific JS
+ * Scene 1 (scene-specific JS)
  */
 
+let scene1El = document.querySelector(`#scene.scene1`);
+
 // Choose player age
-const optionsEls = document.querySelectorAll(".options");
+const optionsEls = scene1El.querySelectorAll(".options");
 optionsEls.forEach((option) =>
   option.addEventListener("click", (e) => {
     // Set player age
     player.age = e.target.innerHTML;
-
     // Remove non-selected buttons
     let selectedId = e.target.getAttribute("id");
     optionsEls.forEach((x) => {

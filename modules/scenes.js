@@ -38,6 +38,7 @@ Well, you might as well put on some clothes and try to find something else to ea
 export const scenes = {
   // TEST SCENE1
   scene1: {
+    id: "scene1",
     location: "Scene 1: Test",
     description: "This is a test scene {{15}}{{25}}{{35}}.",
     choices: [
@@ -50,8 +51,9 @@ export const scenes = {
   },
   // TEST SCENE0
   scene0: {
+    id: "scene0",
     location: "Scene 0: Test",
-    description: "This is a test scene.",
+    description: "This is a test scene {{1}}{{2}}{{3}}.",
     choices: [
       {
         name: "Empty inventory",
@@ -66,12 +68,14 @@ export const scenes = {
   },
   // Scene 1: Introduction
   // scene1: {
+  // id: "scene1",
   //   location: "Uncle's house",
   //   description: descriptions.scene1,
   //   choices: [{ name: "Easy peasy", next: "scene2" }],
   // },
   // Scene 2: Waking up
   scene2: {
+    id: "scene2",
     location: "Uncle's house",
     description: descriptions.scene2,
     choices: [
@@ -89,6 +93,7 @@ export const scenes = {
   },
   // Scene 3: Snooze
   scene3: {
+    id: "scene3",
     location: "Uncle's house",
     description: descriptions.scene3,
     choices: [
@@ -111,6 +116,7 @@ export const scenes = {
   },
   // Scene 4: Sidewalk
   scene4: {
+    id: "scene4",
     location: "Sidewalk",
     description: descriptions.scene4,
     choices: [

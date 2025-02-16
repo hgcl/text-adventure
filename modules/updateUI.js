@@ -2,6 +2,7 @@
  * Function that updates the DOM
  */
 
+const sceneEl = document.getElementById("scene");
 const locationEl = document.getElementById("location");
 const descriptionEl = document.getElementById("description");
 const inventoryEl = document.getElementById("inventory");
@@ -10,6 +11,10 @@ const pointsEl = document.getElementById("points");
 export function updateUI(element, ...args) {
   switch (element) {
     // Where `args[0] === scene`
+
+    case "scene":
+      sceneEl.setAttribute("class", args[0].id);
+      break;
 
     case "location":
       locationEl.textContent = args[0].location;
