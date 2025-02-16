@@ -7,6 +7,7 @@ import { updateUI } from "./modules/updateUI.js";
  */
 let player = new Character(0, 0, []);
 let scene = scenes.scene1;
+let wakeUpTime = 6;
 
 const choicesEl = document.getElementById("choices");
 
@@ -23,8 +24,13 @@ function newScene() {
 
   // Create a button for each choice and record its index number in `data-index`
   for (let i = 0; i < scene.choices.length; i++) {
+    let specialAction = scene.choices[i].specialAction;
     let btn = document.createElement("button");
     btn.textContent = scene.choices[i].name;
+    // Append a class name to choices with special actions
+    if (specialAction) {
+      btn.setAttribute("class", `sa-${specialAction}`);
+    }
     choicesEl.appendChild(btn);
     // Record choice index number in `data-index` attribute
     btn.setAttribute("data-index", i);
@@ -38,31 +44,13 @@ choicesEl.addEventListener("click", (e) => {
   // Get next scene object (based on choice index)
   const index = e.target.getAttribute("data-index");
   const nextScene = scenes[scene.choices[index].next];
-  // Does the selected choice have a special action?
-  let selectedSpecialAction;
-  if (scene.choices[index].specialAction) {
-    selectedSpecialAction = scene.choices[index].specialAction;
-  }
 
   // Console log choice
   console.log("[ Clicked on: " + scene.choices[index].name + " ]");
 
   // Earn points?
   let newPoints = scene.choices[index].points;
-  if (
-    (newPoints !== undefined) |
-    (selectedSpecialAction === "emptyInventory")
-  ) {
-    // Empty inventory to earn points?
-    if (selectedSpecialAction === "emptyInventory") {
-      // Count points
-      newPoints = 0;
-      player.inventory.forEach((item) => {
-        newPoints += item.points;
-      });
-      // Reset inventory
-      player.inventory = [];
-    }
+  if (newPoints !== undefined) {
     console.log("+" + newPoints + " point(s)");
     player.addPoints(newPoints);
   }
@@ -98,7 +86,7 @@ newScene();
 
 let scene1El = document.querySelector(`#scene.scene1`);
 
-// Choose player age
+// Choose and save player age
 const optionsEls = scene1El.querySelectorAll(".options");
 optionsEls.forEach((option) =>
   option.addEventListener("click", (e) => {
@@ -115,9 +103,20 @@ optionsEls.forEach((option) =>
 );
 
 /**
+ * Scene 2 (scene-specific JS)
+ */
+
+let scene2El = document.querySelector(`#scene.scene2`);
+
+scene2El
+  .querySelector("#choices .sa-lateStart")
+  .addEventListener("click", (e) => {
+    wakeUpTime = 10;
+    console.log("Late start at " + wakeUpTime);
+  });
+
+/**
  * Make some variables accessible via DevTools
  */
 
 window.player = player;
-window.scene = scene;
-window.scenes = scenes;

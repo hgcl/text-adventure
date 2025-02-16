@@ -36,43 +36,45 @@ Well, you might as well put on some clothes and try to find something else to ea
  */
 
 export const scenes = {
-  // TEST SCENE1
+  // // TEST SCENE1
+  // scene1: {
+  //   id: "scene1",
+  //   location: "Scene 1: Test",
+  //   description: "This is a test scene {{15}}{{25}}{{35}}.",
+  //   choices: [
+  //     {
+  //       name: "Late start",
+  //       inventory: { name: "an item", points: 2 },
+  //       specialAction: "lateStart",
+  //       next: "scene0",
+  //     },
+  //   ],
+  // },
+  // // TEST SCENE0
+  // scene0: {
+  //   id: "scene0",
+  //   location: "Scene 0: Test",
+  //   description: "This is a test scene {{1}}{{2}}{{3}}.",
+  //   choices: [
+  //     {
+  //       name: "Empty inventory",
+  //       specialAction: "emptyInventory",
+  //       next: "scene1",
+  //     },
+  //     {
+  //       name: "Go to scene 1",
+  //       next: "scene1",
+  //     },
+  //   ],
+  // },
+  //************************************************************//
+  // Scene 1: Introduction
   scene1: {
     id: "scene1",
-    location: "Scene 1: Test",
-    description: "This is a test scene {{15}}{{25}}{{35}}.",
-    choices: [
-      {
-        name: "An item",
-        inventory: { name: "an item", points: 2 },
-        next: "scene0",
-      },
-    ],
+    location: "Uncle's house",
+    description: descriptions.scene1,
+    choices: [{ name: "Easy peasy", next: "scene2" }],
   },
-  // TEST SCENE0
-  scene0: {
-    id: "scene0",
-    location: "Scene 0: Test",
-    description: "This is a test scene {{1}}{{2}}{{3}}.",
-    choices: [
-      {
-        name: "Empty inventory",
-        specialAction: "emptyInventory",
-        next: "scene1",
-      },
-      {
-        name: "Go to scene 1",
-        next: "scene1",
-      },
-    ],
-  },
-  // Scene 1: Introduction
-  // scene1: {
-  // id: "scene1",
-  //   location: "Uncle's house",
-  //   description: descriptions.scene1,
-  //   choices: [{ name: "Easy peasy", next: "scene2" }],
-  // },
   // Scene 2: Waking up
   scene2: {
     id: "scene2",
@@ -81,12 +83,12 @@ export const scenes = {
     choices: [
       {
         name: "Snooze",
+        specialAction: "lateStart",
         next: "scene3",
       },
       {
         name: "Wake up, but ugh",
         points: 1,
-        specialAction: "earlyBird",
         next: "scene4",
       },
     ],
