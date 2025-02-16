@@ -37,6 +37,11 @@ currChoicesEl.addEventListener("click", (e) => {
   // Get next scene object (based on choice index)
   const index = e.target.getAttribute("data-index");
   const nextScene = scenes[scene.choices[index].next];
+  // Does the selected choice have a special action?
+  let selectedSpecialAction;
+  if (scene.choices[index].specialAction) {
+    selectedSpecialAction = scene.choices[index].specialAction;
+  }
 
   // Console log choice
   console.log("[ Clicked on: " + scene.choices[index].name + " ]");
@@ -45,10 +50,10 @@ currChoicesEl.addEventListener("click", (e) => {
   let newPoints = scene.choices[index].points;
   if (
     (newPoints !== undefined) |
-    (scene.choices[index].emptyInventory === true)
+    (selectedSpecialAction === "emptyInventory")
   ) {
     // Empty inventory to earn points?
-    if (scene.choices[index].emptyInventory === true) {
+    if (selectedSpecialAction === "emptyInventory") {
       // Count points
       newPoints = 0;
       player.inventory.forEach((item) => {

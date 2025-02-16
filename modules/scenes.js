@@ -23,11 +23,11 @@ Ugh, it's your damn alarm clock, and it's six in the morning. The day hasn't eve
 What got into your head last night, that you decided to wake up at this unholy hour? You could easily sleep thirty minutes more and still easily impress your uncle.`,
   scene3: `You slowly open your eyes, as you feel the warmth of the sun on your skin...
 
-Is it past 10am!? The famous noodle stall you wanted to go to has probably already closed.
+Is it past 10am!? The famous noodle stall you wanted to go to is probably already sold out.
 
 Your surprise plan "Bring Back a Super Delicious Breakfast From The Super Famous Stall To Impress Uncle" failed before it even had a chance. _Sigh_.
 
-Well, you might as well put on some clothes and try to find something else to eat.`,
+Well, you might as well put on some clothes and try to find something else to eat. Grab one of the following items before heading out.`,
   scene4: `sidewalk stuff`,
 };
 
@@ -36,12 +36,40 @@ Well, you might as well put on some clothes and try to find something else to ea
  */
 
 export const scenes = {
-  // Scene 1: Introduction
+  // TEST SCENE1
   scene1: {
-    location: "Uncle's house",
-    description: descriptions.scene1,
-    choices: [{ name: "Easy peasy", next: "scene2" }],
+    location: "Scene 1: Test",
+    description: "This is a test scene {{15}}{{25}}{{35}}.",
+    choices: [
+      {
+        name: "An item",
+        inventory: { name: "an item", points: 2 },
+        next: "scene0",
+      },
+    ],
   },
+  // TEST SCENE0
+  scene0: {
+    location: "Scene 0: Test",
+    description: "This is a test scene.",
+    choices: [
+      {
+        name: "Empty inventory",
+        specialAction: "emptyInventory",
+        next: "scene1",
+      },
+      {
+        name: "Go to scene 1",
+        next: "scene1",
+      },
+    ],
+  },
+  // Scene 1: Introduction
+  // scene1: {
+  //   location: "Uncle's house",
+  //   description: descriptions.scene1,
+  //   choices: [{ name: "Easy peasy", next: "scene2" }],
+  // },
   // Scene 2: Waking up
   scene2: {
     location: "Uncle's house",
@@ -51,7 +79,12 @@ export const scenes = {
         name: "Snooze",
         next: "scene3",
       },
-      { name: "Wake up, but ugh", points: 1, next: "scene4" },
+      {
+        name: "Wake up, but ugh",
+        points: 1,
+        specialAction: "earlyBird",
+        next: "scene4",
+      },
     ],
   },
   // Scene 3: Snooze
@@ -60,7 +93,18 @@ export const scenes = {
     description: descriptions.scene3,
     choices: [
       {
-        name: "Get out",
+        name: "Sunglasses",
+        inventory: { name: "sunglasses" },
+        next: "scene4",
+      },
+      {
+        name: "A face mask",
+        inventory: { name: "a face mask", points: 2 },
+        next: "scene4",
+      },
+      {
+        name: "A hat",
+        inventory: { name: "a hat", points: 2 },
         next: "scene4",
       },
     ],
@@ -76,22 +120,4 @@ export const scenes = {
       },
     ],
   },
-  // EXAMPLE SCENE
-  // scene3: {
-  //   location: "XXX",
-  //   description: descriptions.scene3,
-  //   choices: [
-  //     {
-  //       name: "Give item",
-  //       emptyInventory: true,
-  //       next: "scene1",
-  //     },
-  //     {
-  //       name: "Go to scene 1",
-  //       inventory: { name: "a hat", points: 3 },
-  //       points: 3,
-  //       next: "scene1",
-  //     },
-  //   ],
-  // },
 };
