@@ -2,22 +2,22 @@
  * Function that updates the DOM
  */
 
-const currSceneEl = document.getElementById("curr-scene");
-const currDescriptionEl = document.getElementById("curr-description");
+const locationEl = document.getElementById("location");
+const descriptionEl = document.getElementById("description");
 const inventoryEl = document.getElementById("inventory");
 const pointsEl = document.getElementById("points");
 
-export function updateUI(element, object) {
+export function updateUI(element, ...args) {
   switch (element) {
-    // Where `object === scene`
+    // Where `args[0] === scene`
 
     case "location":
-      currSceneEl.textContent = object.location;
+      locationEl.textContent = args[0].location;
       break;
 
     case "description":
-      currDescriptionEl.replaceChildren(); // reset to zero
-      const descriptionArray = object.description.split(/\n\n/);
+      descriptionEl.replaceChildren(); // reset to zero
+      const descriptionArray = args[0].description.split(/\n\n/);
       descriptionArray.forEach((line) => {
         // Replace `{{xxx}}` placeholders with actual buttons
         line = line.replaceAll(
@@ -28,19 +28,19 @@ export function updateUI(element, object) {
         line = line.replaceAll(/_(.*?)_/g, `<em>$1<\/em>`);
         let p = document.createElement("p");
         p.innerHTML = line;
-        currDescriptionEl.appendChild(p);
+        descriptionEl.appendChild(p);
       });
       break;
 
-    // Where `object === player`
+    // Where `args[0] === player`
 
     case "points":
-      pointsEl.textContent = object.points;
+      pointsEl.textContent = args[0].points;
       break;
 
     case "inventory":
       inventoryEl.replaceChildren(); // reset to zero
-      object.inventory.forEach((item) => {
+      args[0].inventory.forEach((item) => {
         let span = document.createElement("span");
         span.textContent = item.name;
         inventoryEl.appendChild(span);
