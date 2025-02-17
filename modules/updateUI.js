@@ -26,8 +26,8 @@ export function updateUI(element, ...args) {
       descriptionArray.forEach((line) => {
         // Replace `{{xxx}}` placeholders with actual buttons
         line = line.replaceAll(
-          /{{(.*?)}}/g,
-          `<button id="$1" class="options">$1<\/button>`
+          /{{(.*?)\|(.*?)}}/g,
+          `<button id="button-$1" onclick="$2();">$1<\/button>`
         );
         // Replace `_xxx_` placeholders with empasized tag
         line = line.replaceAll(/_(.*?)_/g, `<em>$1<\/em>`);

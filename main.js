@@ -24,12 +24,12 @@ function newScene() {
 
   // Create a button for each choice and record its index number in `data-index`
   for (let i = 0; i < scene.choices.length; i++) {
-    let specialAction = scene.choices[i].specialAction;
     let btn = document.createElement("button");
     btn.textContent = scene.choices[i].name;
     // Append a class name to choices with special actions
+    let specialAction = scene.choices[i].specialAction;
     if (specialAction) {
-      btn.setAttribute("class", `sa-${specialAction}`);
+      btn.setAttribute("onclick", `${specialAction}();`);
     }
     choicesEl.appendChild(btn);
     // Record choice index number in `data-index` attribute
@@ -78,45 +78,31 @@ choicesEl.addEventListener("click", (e) => {
   }
 });
 
+/**
+ * Special actions (called through normal choices or inside of descriptions)
+ */
+
+// Scene 1: increment and save the player age
+function incrementAge() {
+  const ageEl = document.getElementById("button-15"); // Only available in scene1
+  // Increment by 10 years for each click, and save player age
+  ageEl.textContent = Number(ageEl.textContent) + 10;
+  player.age = ageEl.textContent;
+}
+
+// Scene 2: update the `wakeUpTime` variable
+function lateStart() {
+  wakeUpTime = 10;
+}
+
+/**
+ * Launch the game
+ * Make some variables/functions available globally
+ */
+
 newScene();
 
-/**
- * Scene 1 (scene-specific JS)
- */
-
-let scene1El = document.querySelector(`#scene.scene1`);
-
-// Choose and save player age
-const optionsEls = scene1El.querySelectorAll(".options");
-optionsEls.forEach((option) =>
-  option.addEventListener("click", (e) => {
-    // Set player age
-    player.age = e.target.innerHTML;
-    // Remove non-selected buttons
-    let selectedId = e.target.getAttribute("id");
-    optionsEls.forEach((x) => {
-      if (x.getAttribute("id") !== selectedId) {
-        x.setAttribute("hidden", "true");
-      }
-    });
-  })
-);
-
-/**
- * Scene 2 (scene-specific JS)
- */
-
-let scene2El = document.querySelector(`#scene.scene2`);
-
-scene2El
-  .querySelector("#choices .sa-lateStart")
-  .addEventListener("click", (e) => {
-    wakeUpTime = 10;
-    console.log("Late start at " + wakeUpTime);
-  });
-
-/**
- * Make some variables accessible via DevTools
- */
-
 window.player = player;
+// Special action functions
+window.incrementAge = incrementAge;
+window.lateStart = lateStart;
