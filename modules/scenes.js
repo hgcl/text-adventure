@@ -21,7 +21,10 @@ Uncle? What's happening? Wha-...
 Ugh, it's your damn alarm clock, and it's six in the morning. The day hasn't even started yet.
 
 What got into your head last night, that you decided to wake up at this unholy hour? You could easily sleep thirty minutes more and still easily impress your uncle.`,
-  scene3: `You slowly open your eyes as you feel the warmth of the sun on your skin...
+  scene3a: `You roll out of bed, and try to put on some clothes with your eyes still half shut. Your mind is not completely there yet. 
+
+You quickly grab one of the following items before heading out.`,
+  scene3b: `You slowly open your eyes as you feel the warmth of the sun on your skin...
 
 Is it past 10 am!? The famous noodle stall you wanted to go to is probably already sold out.
 
@@ -117,19 +120,41 @@ export const scenes = {
       {
         name: "Snooze",
         specialAction: "lateStart",
-        next: { default: "scene3" },
+        next: { default: "scene3b" },
       },
       {
         name: "Wake up, but ugh",
         points: 1,
+        next: { default: "scene3a" },
+      },
+    ],
+  },
+  // Scene 3a: Wake up at 6am
+  scene3a: {
+    location: "Uncle's house",
+    description: [descriptions.scene3a],
+    choices: [
+      {
+        name: "Sunglasses",
+        inventory: { name: "sunglasses" },
+        next: { default: "scene4" },
+      },
+      {
+        name: "A face mask",
+        inventory: { name: "a face mask", points: 2 },
+        next: { default: "scene4" },
+      },
+      {
+        name: "A hat",
+        inventory: { name: "a hat", points: 2 },
         next: { default: "scene4" },
       },
     ],
   },
-  // Scene 3: Snooze
-  scene3: {
+  // Scene 3b: Snooze
+  scene3b: {
     location: "Uncle's house",
-    description: [descriptions.scene3],
+    description: [descriptions.scene3b],
     choices: [
       {
         name: "Sunglasses",
