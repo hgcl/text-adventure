@@ -9,14 +9,11 @@ const choicesEl = document.getElementById("choices");
 const inventoryEl = document.getElementById("inventory");
 const pointsEl = document.getElementById("points");
 
-export function updateUI(element, ...args) {
+export function updateScene(element, ...args) {
   let scene = args[0];
-  let player = args[0];
   let index = args[1];
 
   switch (element) {
-    // Where `args[0] === scene`
-
     case "scene":
       sceneEl.setAttribute("class", scene.id);
       break;
@@ -66,9 +63,13 @@ export function updateUI(element, ...args) {
         btn.setAttribute("data-index", i);
       });
       break;
+  }
+}
 
-    // Where `args[0] === player`
+export function updatePlayer(element, ...args) {
+  let player = args[0];
 
+  switch (element) {
     case "points":
       pointsEl.textContent = player.points;
       break;
@@ -82,4 +83,23 @@ export function updateUI(element, ...args) {
       });
       break;
   }
+}
+
+/**
+ * Transform one-use buttons into normal text
+ * where `buttonEl` is the HTML element found in the DOM
+ */
+export function buttonToText(buttonEl) {
+  // TODO is inserting HTML like this dangerous?
+  buttonEl.insertAdjacentHTML("afterend", `<em>${buttonEl.textContent}</em>`);
+  buttonEl.remove();
+}
+
+/**
+ * Show all choices that had a `hidden` attribute
+ */
+export function showAllChoices() {
+  Array.from(choicesEl.childNodes).forEach((el) =>
+    el.removeAttribute("hidden")
+  );
 }

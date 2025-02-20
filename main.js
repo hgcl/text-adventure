@@ -1,7 +1,12 @@
 import { Character } from "./modules/classes.js";
 import { scenes } from "./modules/scenes.js";
 import { map } from "./modules/map.js";
-import { updateUI } from "./modules/updateUI.js";
+import {
+  updateScene,
+  updatePlayer,
+  buttonToText,
+  showAllChoices,
+} from "./modules/updateUI.js";
 
 /**
  * Define game initial variables
@@ -12,7 +17,7 @@ let wakeUpTime = 6;
 
 const choicesEl = document.getElementById("choices");
 const dialogEl = document.getElementById("dialog");
-const closeDialogBtn = dialogEl.getElementById("close");
+const closeDialogBtn = dialogEl.querySelector("#close");
 
 /**
  * Generate new scene
@@ -24,12 +29,12 @@ function newScene() {
   choicesEl.replaceChildren();
 
   // Update UI
-  updateUI("scene", scene);
-  updateUI("location", scene);
-  updateUI("description", scene, 0);
-  updateUI("choices", scene);
-  updateUI("points", player);
-  updateUI("inventory", player);
+  updateScene("scene", scene);
+  updateScene("location", scene);
+  updateScene("description", scene, 0);
+  updateScene("choices", scene);
+  updatePlayer("points", player);
+  updatePlayer("inventory", player);
 }
 
 /**
@@ -70,25 +75,6 @@ closeDialogBtn.addEventListener("click", () => {
 });
 
 /**
- * Transform one-use buttons into normal text
- * where `buttonDOM` is the HTML element found in the DOM
- */
-function buttonToText(buttonDOM) {
-  // TODO is inserting HTML like this dangerous?
-  buttonDOM.insertAdjacentHTML("afterend", `<em>${buttonDOM.textContent}</em>`);
-  buttonDOM.remove();
-}
-
-/**
- * Show all choices that had a `hidden` attribute
- */
-function showAllChoices() {
-  Array.from(choicesEl.childNodes).forEach((el) =>
-    el.removeAttribute("hidden")
-  );
-}
-
-/**
  * Special actions (called through normal choices or inside of descriptions)
  */
 
@@ -106,10 +92,10 @@ function lateStart() {
 }
 
 // Scene 4: remember map
-function showMap(button) {
+function showMap(buttonEl) {
   // Open modal and "cancel" button
   dialogEl.showModal();
-  buttonToText(button);
+  buttonToText(buttonEl);
 
   // Add automatic closing timeout
   let timer = 6000;
@@ -146,22 +132,22 @@ function chooseWay(button) {
 
     switch (button.id) {
       case "4a-straight":
-        updateUI("description", scene, 1);
+        updateScene("description", scene, 1);
         break;
       case "4b-left":
-        updateUI("description", scene, 2);
+        updateScene("description", scene, 2);
         break;
       case "4c-left":
-        updateUI("description", scene, 3);
+        updateScene("description", scene, 3);
         break;
       case "4d-4th":
-        updateUI("description", scene, 4);
+        updateScene("description", scene, 4);
         showAllChoices();
         break;
     }
   } else {
     // If wrong direction
-    updateUI("description", scene, 5);
+    updateScene("description", scene, 5);
     showAllChoices();
 
     // Create new tag
