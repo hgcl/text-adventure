@@ -1,10 +1,11 @@
 /**
- * Function that updates the DOM
+ * Function that updates the DOM for every new scene
  */
 
 const sceneEl = document.getElementById("scene");
 const locationEl = document.getElementById("location");
 const descriptionEl = document.getElementById("description");
+const choicesEl = document.getElementById("choices");
 const inventoryEl = document.getElementById("inventory");
 const pointsEl = document.getElementById("points");
 
@@ -43,6 +44,26 @@ export function updateUI(element, ...args) {
         let p = document.createElement("p");
         p.innerHTML = line;
         descriptionEl.appendChild(p);
+      });
+      break;
+
+    case "choices":
+      // Create a button for each choice and record its index number in `data-index`
+      scene.choices.forEach((choice, i) => {
+        let btn = document.createElement("button");
+        btn.textContent = choice.name;
+        // If choice is to be hidden by default
+        if (choice.hideUntilEnd) {
+          btn.setAttribute("hidden", "true");
+        }
+        // Append a class name to choices with special actions
+        let specialAction = choice.specialAction;
+        if (specialAction) {
+          btn.setAttribute("onclick", `${specialAction}();`);
+        }
+        choicesEl.appendChild(btn);
+        // Record choice index number in `data-index` attribute
+        btn.setAttribute("data-index", i);
       });
       break;
 

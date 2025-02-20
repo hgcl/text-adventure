@@ -12,7 +12,7 @@ let wakeUpTime = 6;
 
 const choicesEl = document.getElementById("choices");
 const dialogEl = document.getElementById("dialog");
-const closeButton = dialogEl.querySelector("#close");
+const closeDialogBtn = dialogEl.getElementById("close");
 
 /**
  * Generate new scene
@@ -20,28 +20,16 @@ const closeButton = dialogEl.querySelector("#close");
 function newScene() {
   console.log("===> NEW SCENE: " + scene.location);
 
-  // Update UI (scene, location and description)
+  // Clear all previous choices
+  choicesEl.replaceChildren();
+
+  // Update UI
   updateUI("scene", scene);
   updateUI("location", scene);
   updateUI("description", scene, 0);
-
-  // Create a button for each choice and record its index number in `data-index`
-  for (let i = 0; i < scene.choices.length; i++) {
-    let btn = document.createElement("button");
-    btn.textContent = scene.choices[i].name;
-    // If choice is to be hidden by default
-    if (scene.choices[i].hideUntilEnd) {
-      btn.setAttribute("hidden", "true");
-    }
-    // Append a class name to choices with special actions
-    let specialAction = scene.choices[i].specialAction;
-    if (specialAction) {
-      btn.setAttribute("onclick", `${specialAction}();`);
-    }
-    choicesEl.appendChild(btn);
-    // Record choice index number in `data-index` attribute
-    btn.setAttribute("data-index", i);
-  }
+  updateUI("choices", scene);
+  updateUI("points", player);
+  updateUI("inventory", player);
 }
 
 /**
@@ -50,33 +38,22 @@ function newScene() {
 choicesEl.addEventListener("click", (e) => {
   // Get next scene object (based on choice index)
   const index = e.target.getAttribute("data-index");
-  const nextScene = scenes[scene.choices[index].next];
-
-  // Console log choice
-  console.log("[ Clicked on: " + scene.choices[index].name + " ]");
+  const selectedChoice = scene.choices[index];
+  const nextScene = scenes[selectedChoice.next];
 
   // Earn points?
-  let newPoints = scene.choices[index].points;
+  let newPoints = selectedChoice.points;
   if (newPoints !== undefined) {
     console.log("+" + newPoints + " point(s)");
     player.addPoints(newPoints);
   }
 
-  // Update UI (total points)
-  updateUI("points", player);
-
   // Gain inventory items?
-  const newItems = scene.choices[index].inventory;
+  const newItems = selectedChoice.inventory;
   if (newItems !== undefined) {
     console.log("+ " + newItems.name);
     player.addItem(newItems);
   }
-
-  // Update UI (inventory)
-  updateUI("inventory", player);
-
-  // Clear all previous choices (buttons)
-  choicesEl.replaceChildren();
 
   // Set the next scene
   if (nextScene !== undefined) {
@@ -88,7 +65,7 @@ choicesEl.addEventListener("click", (e) => {
 /**
  * Close dialog event listener
  */
-closeButton.addEventListener("click", () => {
+closeDialogBtn.addEventListener("click", () => {
   dialogEl.close();
 });
 
