@@ -28,7 +28,7 @@ Is it past 10 am!? The famous noodle stall you wanted to go to is probably alre
 Your surprise plan, "Bring Back a Super Delicious Breakfast From The Super Famous Stall To Impress Uncle," failed before it even had a chance. _Sigh_.
 
 Well, you might as well put on some clothes and try to find something else to eat. Grab one of the following items before heading out.`,
-  scene4a: `You walk towards the direction of a food street that is 30 minutes walk away. It shouldn't be too hard, your uncle had already brought you there once on his motorbike. You {{remember|remember-map|showMap()}} him showing you a simple map the day before. Or do you really remember?
+  scene4a: `You walk towards the direction of a food street that is 30 minutes walk away. It shouldn't be too hard, your uncle had already brought you there once on his motorbike. You {{remember|remember-map|showMap(this)}} him showing you a simple map the day before. Or do you really remember?
 
 From the middle of the road, you didn't realize how difficult it was to walk in Saigon. The sidewalk is full of all kinds of obstacles. 
 
@@ -49,6 +49,7 @@ After walking past a park, you get to a (squarish) roundabout built around a ver
 
 {{1st street|4d-1st|chooseWay(this)}} {{2nd street|4d-2nd|chooseWay(this)}} {{3rd street|4d-3rd|chooseWay(this)}} {{4th street|4d-4th|chooseWay(this)}}`,
   scene4e: `This street looks very familiar... Oh my, you made it — you are actually on the food street!`,
+  scene4f: `TODO description — Wrong way!`,
   scene5: `TODO`,
 };
 
@@ -61,7 +62,9 @@ export const scenes = {
   // scene1: {
   //   id: "scene1",
   //   location: "Scene 1: Test",
-  //   description: "This is a test scene {{15}}{{25}}{{35}}.",
+  //   description: [
+  //     "This is a test scene {{remember|remember-map|showMap(this)}}.",
+  //   ],
   //   choices: [
   //     {
   //       name: "Late start",
@@ -75,7 +78,7 @@ export const scenes = {
   // scene0: {
   //   id: "scene0",
   //   location: "Scene 0: Test",
-  //   description: "This is a test scene {{1}}{{2}}{{3}}.",
+  //   description: ["This is a test scene {{1}}{{2}}{{3}}."],
   //   choices: [
   //     {
   //       name: "Empty inventory",
@@ -143,6 +146,7 @@ export const scenes = {
       descriptions.scene4c,
       descriptions.scene4d,
       descriptions.scene4e,
+      descriptions.scene4f,
     ],
     choices: [{ name: "Find food", next: "scene5", hideUntilEnd: true }],
   },

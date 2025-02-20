@@ -24,6 +24,7 @@ export function updateUI(element, ...args) {
       locationEl.textContent = scene.location;
       break;
 
+    // when args[0] is "description", the function needs an extra "index" arg
     case "description":
       // Reset to nothing (only if description is undivided, and shown in full)
       if (index === 0) {

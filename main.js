@@ -1,5 +1,6 @@
 import { Character } from "./modules/classes.js";
 import { scenes } from "./modules/scenes.js";
+import { map } from "./modules/map.js";
 import { updateUI } from "./modules/updateUI.js";
 
 /**
@@ -10,6 +11,8 @@ let scene = scenes.scene1;
 let wakeUpTime = 6;
 
 const choicesEl = document.getElementById("choices");
+const dialogEl = document.getElementById("dialog");
+const closeButton = dialogEl.querySelector("#close");
 
 /**
  * Generate new scene
@@ -26,6 +29,10 @@ function newScene() {
   for (let i = 0; i < scene.choices.length; i++) {
     let btn = document.createElement("button");
     btn.textContent = scene.choices[i].name;
+    // If choice is to be hidden by default
+    if (scene.choices[i].hideUntilEnd) {
+      btn.setAttribute("hidden", "true");
+    }
     // Append a class name to choices with special actions
     let specialAction = scene.choices[i].specialAction;
     if (specialAction) {
@@ -79,6 +86,32 @@ choicesEl.addEventListener("click", (e) => {
 });
 
 /**
+ * Close dialog event listener
+ */
+closeButton.addEventListener("click", () => {
+  dialogEl.close();
+});
+
+/**
+ * Transform one-use buttons into normal text
+ * where `buttonDOM` is the HTML element found in the DOM
+ */
+function buttonToText(buttonDOM) {
+  // TODO is inserting HTML like this dangerous?
+  buttonDOM.insertAdjacentHTML("afterend", `<em>${buttonDOM.textContent}</em>`);
+  buttonDOM.remove();
+}
+
+/**
+ * Show all choices that had a `hidden` attribute
+ */
+function showAllChoices() {
+  Array.from(choicesEl.childNodes).forEach((el) =>
+    el.removeAttribute("hidden")
+  );
+}
+
+/**
  * Special actions (called through normal choices or inside of descriptions)
  */
 
@@ -95,24 +128,73 @@ function lateStart() {
   wakeUpTime = 10;
 }
 
+// Scene 4: remember map
+function showMap(button) {
+  // Open modal and "cancel" button
+  dialogEl.showModal();
+  buttonToText(button);
+
+  // Add automatic closing timeout
+  let timer = 6000;
+  setTimeout(function () {
+    dialogEl.close();
+  }, timer);
+
+  // Find and reset content element
+  const contentEl = document.getElementById("content");
+  contentEl.textContent = "";
+
+  // Add countdown to modal
+  const countdownEl = document.createElement("p");
+  contentEl.appendChild(countdownEl);
+  setInterval(function () {
+    if (timer > 0) {
+      timer -= 1000;
+    }
+    countdownEl.textContent = `Closing in ${timer / 1000} second(s)`;
+  }, 1000);
+
+  // Add map to modal
+  let pre = document.createElement("pre");
+  pre.textContent = map;
+  contentEl.appendChild(pre);
+  // TODO => add text for screen reader
+}
+
 // Scene 4: choose direction
-function chooseWay(el) {
-  // Successes (choose right direction)
-  switch (el.id) {
-    case "4a-straight":
-      updateUI("description", scene, 1);
-      break;
-    case "4b-left":
-      updateUI("description", scene, 2);
-      break;
-    case "4c-left":
-      updateUI("description", scene, 3);
-      break;
-    case "4d-4th":
-      updateUI("description", scene, 4);
-      break;
-    case "4e-final-choice":
-      break;
+function chooseWay(button) {
+  // If right direction
+  if (["4a-straight", "4b-left", "4c-left", "4d-4th"].includes(button.id)) {
+    buttonToText(button);
+
+    switch (button.id) {
+      case "4a-straight":
+        updateUI("description", scene, 1);
+        break;
+      case "4b-left":
+        updateUI("description", scene, 2);
+        break;
+      case "4c-left":
+        updateUI("description", scene, 3);
+        break;
+      case "4d-4th":
+        updateUI("description", scene, 4);
+        showAllChoices();
+        break;
+    }
+  } else {
+    // If wrong direction
+    updateUI("description", scene, 5);
+    showAllChoices();
+
+    // Create new tag
+    const newTag = document.createElement("em");
+    newTag.textContent = button.textContent;
+
+    // Replace old button
+    const parentNode = button.parentNode;
+    parentNode.textContent = "";
+    parentNode.appendChild(newTag);
   }
 }
 
@@ -124,7 +206,9 @@ function chooseWay(el) {
 newScene();
 
 window.player = player;
+
 // Special action functions
 window.incrementAge = incrementAge;
 window.lateStart = lateStart;
+window.showMap = showMap;
 window.chooseWay = chooseWay;
