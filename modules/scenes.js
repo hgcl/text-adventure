@@ -49,8 +49,14 @@ After walking past a park, you get to a (squarish) roundabout built around a ver
 
 {{1st street|4d-1st|chooseWay(this)}} {{2nd street|4d-2nd|chooseWay(this)}} {{3rd street|4d-3rd|chooseWay(this)}} {{4th street|4d-4th|chooseWay(this)}}`,
   scene4e: `This street looks very familiar... Oh my, you made it — you are actually on the food street!`,
-  scene4f: `TODO description — Wrong way!`,
+  scene4f: `You walk, and walk, and walk, but you still can't find your way. You are definitely and properly lost.
+
+After a few hours of wandering (or was it only thirty minutes?), you suddenly walk in front of a very familiar food stall. 
+
+Oh my, you made it — you are actually on the food street!`,
   scene5: `TODO`,
+  scene6: `TODO`,
+  scene7: `TODO`,
 };
 
 /**
@@ -70,7 +76,7 @@ export const scenes = {
   //       name: "Late start",
   //       inventory: { name: "an item", points: 2 },
   //       specialAction: "lateStart",
-  //       next: "scene0",
+  //       next: ["scene0"],
   //     },
   //   ],
   // },
@@ -83,11 +89,11 @@ export const scenes = {
   //     {
   //       name: "Empty inventory",
   //       specialAction: "emptyInventory",
-  //       next: "scene1",
+  //       next: ["scene1"],
   //     },
   //     {
   //       name: "Go to scene 1",
-  //       next: "scene1",
+  //       next: ["scene1"],
   //     },
   //   ],
   // },
@@ -96,7 +102,12 @@ export const scenes = {
   scene1: {
     location: "Uncle's house",
     description: [descriptions.scene1],
-    choices: [{ name: "Easy peasy", next: "scene2" }],
+    choices: [
+      {
+        name: "Easy peasy",
+        next: { default: "scene2" },
+      },
+    ],
   },
   // Scene 2: Waking up
   scene2: {
@@ -106,12 +117,12 @@ export const scenes = {
       {
         name: "Snooze",
         specialAction: "lateStart",
-        next: "scene3",
+        next: { default: "scene3" },
       },
       {
         name: "Wake up, but ugh",
         points: 1,
-        next: "scene4",
+        next: { default: "scene4" },
       },
     ],
   },
@@ -123,17 +134,17 @@ export const scenes = {
       {
         name: "Sunglasses",
         inventory: { name: "sunglasses" },
-        next: "scene4",
+        next: { default: "scene4" },
       },
       {
         name: "A face mask",
         inventory: { name: "a face mask", points: 2 },
-        next: "scene4",
+        next: { default: "scene4" },
       },
       {
         name: "A hat",
         inventory: { name: "a hat", points: 2 },
-        next: "scene4",
+        next: { default: "scene4" },
       },
     ],
   },
@@ -148,15 +159,43 @@ export const scenes = {
       descriptions.scene4e,
       descriptions.scene4f,
     ],
-    choices: [{ name: "Find food", next: "scene5", hideUntilEnd: true }],
+    choices: [
+      {
+        name: "Find some food",
+        next: { default: "scene5", lateStart: "scene6" },
+        hideUntilEnd: true,
+      },
+    ],
   },
+  // Scene 5: Pho stall (still open)
   scene5: {
-    location: "TODO",
+    location: "Pho stall",
     description: [descriptions.scene5],
     choices: [
       {
         name: "TODO",
-        next: "scene6",
+        next: { default: "scene7" },
+      },
+    ],
+  },
+  // Scene 6: Pho stall (closed)
+  scene6: {
+    location: "Pho stall (closed)",
+    description: [descriptions.scene6],
+    choices: [
+      {
+        name: "TODO",
+        next: { default: "scene7" },
+      },
+    ],
+  },
+  scene7: {
+    location: "TODO",
+    description: [descriptions.scene7],
+    choices: [
+      {
+        name: "TODO",
+        next: { default: "scene8" },
       },
     ],
   },

@@ -13,7 +13,7 @@ import {
  */
 let player = new Character(0, 0, []);
 let scene = scenes.scene1;
-let wakeUpTime = 6;
+let gameProps = {};
 
 const choicesEl = document.getElementById("choices");
 const dialogEl = document.getElementById("dialog");
@@ -44,7 +44,14 @@ choicesEl.addEventListener("click", (e) => {
   // Get next scene object (based on choice index)
   const index = e.target.getAttribute("data-index");
   const selectedChoice = scene.choices[index];
-  const nextScene = scenes[selectedChoice.next];
+
+  // Define next scene depending on props stored in `gameProps`
+  let nextScene = scenes[selectedChoice.next.default];
+  for (const condition in gameProps) {
+    if (Object.hasOwn(gameProps, condition) && selectedChoice.next[condition]) {
+      nextScene = scenes[selectedChoice.next[condition]];
+    }
+  }
 
   // Earn points?
   let newPoints = selectedChoice.points;
@@ -86,9 +93,9 @@ function incrementAge() {
   player.age = ageEl.textContent;
 }
 
-// Scene 2: update the `wakeUpTime` variable
+// Scene 2: update the `lateStart` property
 function lateStart() {
-  wakeUpTime = 10;
+  gameProps.lateStart = true;
 }
 
 // Scene 4: remember map
@@ -169,6 +176,7 @@ function chooseWay(button) {
 newScene();
 
 window.player = player;
+window.gameProps = gameProps;
 
 // Special action functions
 window.incrementAge = incrementAge;
