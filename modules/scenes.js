@@ -21,45 +21,45 @@ Uncle? What's happening? Wha-...
 Ugh, it's your damn alarm clock, and it's six in the morning. The day hasn't even started yet.
 
 What got into your head last night, that you decided to wake up at this unholy hour? You could easily sleep thirty minutes more and still easily impress your uncle.`,
-  scene3a: `You roll out of bed, and try to put on some clothes with your eyes still half shut. Your mind is not completely there yet. 
+  scene3: `You roll out of bed, and try to put on some clothes with your eyes still half shut. Your mind is not completely there yet. 
 
 You quickly grab one of the following items before heading out.`,
-  scene3b: `You slowly open your eyes as you feel the warmth of the sun on your skin...
+  scene4: `You slowly open your eyes as you feel the warmth of the sun on your skin...
 
 Is it past 10 am!? The famous noodle stall you wanted to go to is probably already sold out.
 
 Your surprise plan, "Bring Back a Super Delicious Breakfast From The Super Famous Stall To Impress Uncle," failed before it even had a chance. _Sigh_.
 
 Well, you might as well put on some clothes and try to find something else to eat. Grab one of the following items before heading out.`,
-  scene4a: `You walk towards the direction of a food street that is 30 minutes walk away. It shouldn't be too hard, your uncle had already brought you there once on his motorbike. You {{remember|remember-map|showMap(this)}} him showing you a simple map the day before. Or do you really remember?
+  scene5a: `You walk towards the direction of a food street that is 30 minutes walk away. It shouldn't be too hard, your uncle had already brought you there once on his motorbike. You {{remember|remember-map|showMap(this)}} him showing you a simple map the day before. Or do you really remember?
 
 From the middle of the road, you didn't realize how difficult it was to walk in Saigon. The sidewalk is full of all kinds of obstacles. 
 
 You start by going...
 
-{{straight|4a-straight|chooseWay(this)}}`,
-  scene4b: `... but quickly need to get around a line of motorbikes parked in front of you. You jump over a pile of trash, blocking your way in front of the post office. From there, you decide to go...
+{{straight|5a-straight|chooseWay(this)}}`,
+  scene5b: `... but quickly need to get around a line of motorbikes parked in front of you. You jump over a pile of trash, blocking your way in front of the post office. From there, you decide to go...
 
-{{straight|4b-straight|chooseWay(this)}} {{right|4b-right|chooseWay(this)}} {{left|4b-left|chooseWay(this)}}`,
-  scene4c: `... and continue straight — or as straight as you can. You measure that you can only walk up to five meters on the sidewalk before encountering a new obstacle. 
+{{straight|5b-straight|chooseWay(this)}} {{right|5b-right|chooseWay(this)}} {{left|5b-left|chooseWay(this)}}`,
+  scene5c: `... and continue straight — or as straight as you can. You measure that you can only walk up to five meters on the sidewalk before encountering a new obstacle. 
 
 As you are looking at your feet, a giant tree appears in front of you. You go...
 
-{{straight|4c-straight|chooseWay(this)}} {{right|4c-right|chooseWay(this)}} {{left|4c-left|chooseWay(this)}}`,
-  scene4d: `Nice, you still recognize your surroundings. At this point, you've just given up on the sidewalk and now walk directly on the road.
+{{straight|5c-straight|chooseWay(this)}} {{right|5c-right|chooseWay(this)}} {{left|5c-left|chooseWay(this)}}`,
+  scene5d: `Nice, you still recognize your surroundings. At this point, you've just given up on the sidewalk and now walk directly on the road.
 
 After walking past a park, you get to a (squarish) roundabout built around a very socialist-looking statue. It has four other roads branching out from the centre. Counting from the left, you take the...
 
-{{1st street|4d-1st|chooseWay(this)}} {{2nd street|4d-2nd|chooseWay(this)}} {{3rd street|4d-3rd|chooseWay(this)}} {{4th street|4d-4th|chooseWay(this)}}`,
-  scene4e: `This street looks very familiar... Oh my, you made it — you are actually on the food street!`,
-  scene4f: `You walk, and walk, and walk, but you still can't find your way. You are definitely and properly lost.
+{{1st street|5d-1st|chooseWay(this)}} {{2nd street|5d-2nd|chooseWay(this)}} {{3rd street|5d-3rd|chooseWay(this)}} {{4th street|5d-4th|chooseWay(this)}}`,
+  scene5e: `This street looks very familiar... Oh my, you made it — you are actually on the food street!`,
+  scene5f: `You walk, and walk, and walk, but you still can't find your way. You are definitely and properly lost.
 
 After a few hours of wandering (or was it only thirty minutes?), you suddenly walk in front of a very familiar food stall. 
 
 Oh my, you made it — you are actually on the food street!`,
-  scene5: `TODO`,
   scene6: `TODO`,
   scene7: `TODO`,
+  scene8: `TODO`,
 };
 
 /**
@@ -120,107 +120,107 @@ export const scenes = {
       {
         name: "Snooze",
         specialAction: "lateStart",
-        next: { default: "scene3b" },
+        next: { default: "scene4" },
       },
       {
         name: "Wake up, but ugh",
         points: 1,
-        next: { default: "scene3a" },
+        next: { default: "scene3" },
       },
     ],
   },
-  // Scene 3a: Wake up at 6am
-  scene3a: {
+  // Scene 3: Wake up at 6am
+  scene3: {
     location: "Uncle's house",
-    description: [descriptions.scene3a],
+    description: [descriptions.scene3],
     choices: [
       {
         name: "Sunglasses",
         inventory: { name: "sunglasses" },
-        next: { default: "scene4" },
+        next: { default: "scene5" },
       },
       {
         name: "A face mask",
         inventory: { name: "a face mask", points: 2 },
-        next: { default: "scene4" },
+        next: { default: "scene5" },
       },
       {
         name: "A hat",
         inventory: { name: "a hat", points: 2 },
-        next: { default: "scene4" },
+        next: { default: "scene5" },
       },
     ],
   },
-  // Scene 3b: Snooze
-  scene3b: {
-    location: "Uncle's house",
-    description: [descriptions.scene3b],
-    choices: [
-      {
-        name: "Sunglasses",
-        inventory: { name: "sunglasses" },
-        next: { default: "scene4" },
-      },
-      {
-        name: "A face mask",
-        inventory: { name: "a face mask", points: 2 },
-        next: { default: "scene4" },
-      },
-      {
-        name: "A hat",
-        inventory: { name: "a hat", points: 2 },
-        next: { default: "scene4" },
-      },
-    ],
-  },
-  // Scene 4: Sidewalk
+  // Scene 4: Snooze
   scene4: {
+    location: "Uncle's house",
+    description: [descriptions.scene4],
+    choices: [
+      {
+        name: "Sunglasses",
+        inventory: { name: "sunglasses" },
+        next: { default: "scene5" },
+      },
+      {
+        name: "A face mask",
+        inventory: { name: "a face mask", points: 2 },
+        next: { default: "scene5" },
+      },
+      {
+        name: "A hat",
+        inventory: { name: "a hat", points: 2 },
+        next: { default: "scene5" },
+      },
+    ],
+  },
+  // Scene 5: Sidewalk
+  scene5: {
     location: "Sidewalk",
     description: [
-      descriptions.scene4a,
-      descriptions.scene4b,
-      descriptions.scene4c,
-      descriptions.scene4d,
-      descriptions.scene4e,
-      descriptions.scene4f,
+      descriptions.scene5a,
+      descriptions.scene5b,
+      descriptions.scene5c,
+      descriptions.scene5d,
+      descriptions.scene5e,
+      descriptions.scene5f,
     ],
     choices: [
       {
         name: "Find some food",
-        next: { default: "scene5", lateStart: "scene6" },
+        next: { default: "scene6", lateStart: "scene7" },
         hideUntilEnd: true,
       },
     ],
   },
-  // Scene 5: Pho stall (still open)
-  scene5: {
-    location: "Pho stall",
-    description: [descriptions.scene5],
-    choices: [
-      {
-        name: "TODO",
-        next: { default: "scene7" },
-      },
-    ],
-  },
-  // Scene 6: Pho stall (closed)
+  // Scene 6: Pho stall (still open)
   scene6: {
-    location: "Pho stall (closed)",
+    location: "Pho stall",
     description: [descriptions.scene6],
     choices: [
       {
         name: "TODO",
-        next: { default: "scene7" },
+        next: { default: "scene8" },
       },
     ],
   },
+  // Scene 7: Pho stall (closed)
   scene7: {
-    location: "TODO",
+    location: "Pho stall (closed)",
     description: [descriptions.scene7],
     choices: [
       {
         name: "TODO",
         next: { default: "scene8" },
+      },
+    ],
+  },
+  scene8: {
+    location: "TODO",
+    description: [descriptions.scene8],
+    choices: [
+      {
+        name: "TODO",
+        next: { default: "scene9" },
       },
     ],
   },
