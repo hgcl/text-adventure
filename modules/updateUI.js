@@ -2,14 +2,13 @@
  * Function that updates the DOM for every new scene
  */
 
-const sceneEl = document.getElementById("scene");
-const locationEl = document.getElementById("location");
-const descriptionEl = document.getElementById("description");
 const choicesEl = document.getElementById("choices");
-const inventoryEl = document.getElementById("inventory");
-const pointsEl = document.getElementById("points");
 
 export function updateScene(element, ...args) {
+  const sceneEl = document.getElementById("scene");
+  const locationEl = document.getElementById("location");
+  const descriptionEl = document.getElementById("description");
+
   let scene = args[0];
   let index = args[1];
 
@@ -67,6 +66,9 @@ export function updateScene(element, ...args) {
 }
 
 export function updatePlayer(element, ...args) {
+  const pointsEl = document.getElementById("points");
+  const inventoryEl = document.getElementById("inventory");
+
   let player = args[0];
 
   switch (element) {
@@ -102,4 +104,26 @@ export function showAllChoices() {
   Array.from(choicesEl.childNodes).forEach((el) =>
     el.removeAttribute("hidden")
   );
+}
+
+/**
+ * Show modal that shows new earned points
+ * TODO: where to show points on screen
+ * TODO: add focus for screen reader
+ */
+
+export function notifyPoints(points) {
+  // Show notification
+  const notificationEl = document.getElementById("notification");
+  notificationEl.removeAttribute("hidden");
+
+  // Update content element
+  const content = notificationEl.querySelector("p");
+  content.textContent = `Good job, you earned ${points} more point(s)!`;
+
+  // Add automatic closing timeout
+  let timer = 3000;
+  setTimeout(function () {
+    notificationEl.setAttribute("hidden", "true");
+  }, timer);
 }

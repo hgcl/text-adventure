@@ -6,6 +6,7 @@ import {
   updatePlayer,
   buttonToText,
   showAllChoices,
+  notifyPoints,
 } from "./modules/updateUI.js";
 
 /**
@@ -17,6 +18,7 @@ let gameProps = {};
 
 const choicesEl = document.getElementById("choices");
 const dialogEl = document.getElementById("dialog");
+const dialogContentEl = document.getElementById("content");
 const closeDialogBtn = dialogEl.querySelector("#close");
 
 /**
@@ -58,6 +60,9 @@ choicesEl.addEventListener("click", (e) => {
   if (newPoints !== undefined) {
     console.log("+" + newPoints + " point(s)");
     player.addPoints(newPoints);
+
+    // Show points in modal
+    notifyPoints(newPoints);
   }
 
   // Gain inventory items?
@@ -110,13 +115,12 @@ function showMap(buttonEl) {
     dialogEl.close();
   }, timer);
 
-  // Find and reset content element
-  const contentEl = document.getElementById("content");
-  contentEl.textContent = "";
+  // Reset content element
+  dialogContentEl.textContent = "";
 
   // Add countdown to modal
   const countdownEl = document.createElement("p");
-  contentEl.appendChild(countdownEl);
+  dialogContentEl.appendChild(countdownEl);
   setInterval(function () {
     if (timer > 0) {
       timer -= 1000;
@@ -127,12 +131,14 @@ function showMap(buttonEl) {
   // Add map to modal
   let pre = document.createElement("pre");
   pre.textContent = map;
-  contentEl.appendChild(pre);
+  dialogContentEl.appendChild(pre);
   // TODO => add text for screen reader
 }
 
 // Scene 4: choose direction
 function chooseWay(button) {
+  let newPoints = 0;
+
   // If right direction
   if (["5a-straight", "5b-left", "5c-left", "5d-4th"].includes(button.id)) {
     buttonToText(button);
@@ -143,12 +149,15 @@ function chooseWay(button) {
         break;
       case "5b-left":
         updateScene("description", scene, 2);
+        newPoints += 1;
         break;
       case "5c-left":
         updateScene("description", scene, 3);
+        newPoints += 1;
         break;
       case "5d-4th":
         updateScene("description", scene, 4);
+        newPoints += 3;
         showAllChoices();
         break;
     }
@@ -165,6 +174,13 @@ function chooseWay(button) {
     const parentNode = button.parentNode;
     parentNode.textContent = "";
     parentNode.appendChild(newTag);
+  }
+
+  // Save new points and notify player
+  if (newPoints > 0) {
+    player.addPoints(newPoints);
+    notifyPoints(newPoints);
+    updatePlayer("points", player);
   }
 }
 
