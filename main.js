@@ -134,20 +134,20 @@ function showMap(buttonEl) {
 // Scene 4: choose direction
 function chooseWay(button) {
   // If right direction
-  if (["4a-straight", "4b-left", "4c-left", "4d-4th"].includes(button.id)) {
+  if (["5a-straight", "5b-left", "5c-left", "5d-4th"].includes(button.id)) {
     buttonToText(button);
 
     switch (button.id) {
-      case "4a-straight":
+      case "5a-straight":
         updateScene("description", scene, 1);
         break;
-      case "4b-left":
+      case "5b-left":
         updateScene("description", scene, 2);
         break;
-      case "4c-left":
+      case "5c-left":
         updateScene("description", scene, 3);
         break;
-      case "4d-4th":
+      case "5d-4th":
         updateScene("description", scene, 4);
         showAllChoices();
         break;

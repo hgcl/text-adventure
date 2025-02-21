@@ -40,12 +40,12 @@ You start by going...
 {{straight|5a-straight|chooseWay(this)}}`,
   scene5b: `... but quickly need to get around a line of motorbikes parked in front of you. You jump over a pile of trash, blocking your way in front of the post office. From there, you decide to go...
 
-{{straight|5b-straight|chooseWay(this)}} {{right|5b-right|chooseWay(this)}} {{left|5b-left|chooseWay(this)}}`,
+{{straight|5b-straight|chooseWay(this)}} {{left|5b-left|chooseWay(this)}} {{right|5b-right|chooseWay(this)}}`,
   scene5c: `... and continue straight — or as straight as you can. You measure that you can only walk up to five meters on the sidewalk before encountering a new obstacle. 
 
 As you are looking at your feet, a giant tree appears in front of you. You go...
 
-{{straight|5c-straight|chooseWay(this)}} {{right|5c-right|chooseWay(this)}} {{left|5c-left|chooseWay(this)}}`,
+{{straight|5c-straight|chooseWay(this)}} {{left|5c-left|chooseWay(this)}} {{right|5c-right|chooseWay(this)}}`,
   scene5d: `Nice, you still recognize your surroundings. At this point, you've just given up on the sidewalk and now walk directly on the road.
 
 After walking past a park, you get to a (squarish) roundabout built around a very socialist-looking statue. It has four other roads branching out from the centre. Counting from the left, you take the...
@@ -182,6 +182,7 @@ export const scenes = {
       descriptions.scene5c,
       descriptions.scene5d,
       descriptions.scene5e,
+      // if wrong turn:
       descriptions.scene5f,
     ],
     choices: [
