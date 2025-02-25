@@ -158,5 +158,6 @@ export function notify(element, ...args) {
   let timer = 5000;
   setTimeout(function () {
     notificationEl.setAttribute("hidden", "true");
+    notificationEl.replaceChildren(); // reset to nothing
   }, timer);
 }
