@@ -1,8 +1,8 @@
+const choicesEl = document.getElementById("choices");
+
 /**
  * Function that updates the DOM for every new scene
  */
-
-const choicesEl = document.getElementById("choices");
 
 export function updateScene(element, ...args) {
   const sceneEl = document.getElementById("scene");
@@ -65,15 +65,21 @@ export function updateScene(element, ...args) {
   }
 }
 
+/**
+ * Function that updates the DOM for player-related info
+ * e.g. inventory, score, wallet
+ */
+
 export function updatePlayer(element, ...args) {
-  const pointsEl = document.getElementById("points");
+  const scoreEl = document.getElementById("score");
   const inventoryEl = document.getElementById("inventory");
+  const walletEl = document.getElementById("wallet");
 
   let player = args[0];
 
   switch (element) {
-    case "points":
-      pointsEl.textContent = player.points;
+    case "score":
+      scoreEl.textContent = player.score;
       break;
 
     case "inventory":
@@ -84,6 +90,10 @@ export function updatePlayer(element, ...args) {
         inventoryEl.appendChild(span);
       });
       break;
+
+    case "wallet":
+      walletEl.textContent = `${player.wallet},000 VND`;
+      break;
   }
 }
 
@@ -91,6 +101,7 @@ export function updatePlayer(element, ...args) {
  * Transform one-use buttons into normal text
  * where `buttonEl` is the HTML element found in the DOM
  */
+
 export function buttonToText(buttonEl) {
   // TODO is inserting HTML like this dangerous?
   buttonEl.insertAdjacentHTML("afterend", `<em>${buttonEl.textContent}</em>`);
@@ -100,6 +111,7 @@ export function buttonToText(buttonEl) {
 /**
  * Show all choices that had a `hidden` attribute
  */
+
 export function showAllChoices() {
   Array.from(choicesEl.childNodes).forEach((el) =>
     el.removeAttribute("hidden")
@@ -107,22 +119,39 @@ export function showAllChoices() {
 }
 
 /**
- * Show modal that shows new earned points
- * TODO: where to show points on screen
+ * Show modal that shows: earned points, earned/used money
+ * TODO: where to show dialog on screen
  * TODO: add focus for screen reader
  */
 
-export function notifyPoints(points) {
-  // Show notification
+export function notify(element, ...args) {
   const notificationEl = document.getElementById("notification");
-  notificationEl.removeAttribute("hidden");
 
-  // Update content element
-  const content = notificationEl.querySelector("p");
-  content.textContent = `Good job, you earned ${points} more point(s)!`;
+  let points = args[0];
+  let money = args[0];
+
+  // Show notification
+  notificationEl.removeAttribute("hidden");
+  let p = document.createElement("p");
+
+  switch (element) {
+    case "score":
+      p.textContent = `Good job, you earned ${points} more point(s)!`;
+      break;
+
+    case "wallet":
+      if (money < 0) {
+        p.textContent = `You spent ${money * -1},000 VND.`;
+      } else {
+        p.textContent = `You earned ${money},000 VND.`;
+      }
+      break;
+  }
+
+  notificationEl.appendChild(p);
 
   // Add automatic closing timeout
-  let timer = 3000;
+  let timer = 5000;
   setTimeout(function () {
     notificationEl.setAttribute("hidden", "true");
   }, timer);

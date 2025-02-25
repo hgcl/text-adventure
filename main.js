@@ -6,13 +6,13 @@ import {
   updatePlayer,
   buttonToText,
   showAllChoices,
-  notifyPoints,
+  notify,
 } from "./modules/updateUI.js";
 
 /**
  * Define game initial variables
  */
-let player = new Character(0, 0, []);
+let player = new Character(0, 0, [], 150);
 let scene = scenes.scene1;
 let gameProps = {};
 
@@ -35,8 +35,9 @@ function newScene() {
   updateScene("location", scene);
   updateScene("description", scene, 0);
   updateScene("choices", scene);
-  updatePlayer("points", player);
+  updatePlayer("score", player);
   updatePlayer("inventory", player);
+  updatePlayer("wallet", player);
 }
 
 /**
@@ -62,7 +63,7 @@ choicesEl.addEventListener("click", (e) => {
     player.addPoints(newPoints);
 
     // Show points in modal
-    notifyPoints(newPoints);
+    notify("score", newPoints);
   }
 
   // Gain inventory items?
@@ -70,6 +71,16 @@ choicesEl.addEventListener("click", (e) => {
   if (newItems !== undefined) {
     console.log("+ " + newItems.name);
     player.addItem(newItems);
+  }
+
+  // Earn or spend money?
+  const moneyAmount = selectedChoice.money;
+  if (moneyAmount !== undefined) {
+    console.log("Money earned/spent: " + moneyAmount);
+    player.useMoney(moneyAmount);
+
+    // Show money used in modal
+    notify("wallet", moneyAmount);
   }
 
   // Set the next scene
@@ -179,8 +190,8 @@ function chooseWay(button) {
   // Save new points and notify player
   if (newPoints > 0) {
     player.addPoints(newPoints);
-    notifyPoints(newPoints);
-    updatePlayer("points", player);
+    notify("score", newPoints);
+    updatePlayer("score", player);
   }
 }
 

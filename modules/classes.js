@@ -2,17 +2,19 @@
  * Character class
  */
 export class Character {
-  constructor(age, points, inventory) {
+  constructor(age, score, inventory, wallet) {
     this.age = age;
-    this.points = points;
+    this.score = score;
     this.inventory = inventory;
+    this.wallet = wallet;
   }
   addPoints(point) {
-    this.points += point;
-    // alert(`You earned ${point} point(s)!`);
+    this.score += point;
   }
   addItem(item) {
     this.inventory.push(item);
-    // alert(`You added ${item.name} to your inventory!`);
+  }
+  useMoney(money) {
+    this.wallet += money;
   }
 }
