@@ -83,12 +83,16 @@ export function updatePlayer(element, ...args) {
       break;
 
     case "inventory":
-      inventoryEl.replaceChildren(); // reset to nothing
-      player.inventory.forEach((item) => {
-        let span = document.createElement("span");
-        span.textContent = item.name;
-        inventoryEl.appendChild(span);
-      });
+      if (player.inventory.length) {
+        inventoryEl.replaceChildren(); // reset to nothing
+        player.inventory.forEach((item) => {
+          let span = document.createElement("span");
+          span.textContent = item.name;
+          inventoryEl.appendChild(span);
+        });
+      } else {
+        inventoryEl.textContent = "nothing";
+      }
       break;
 
     case "wallet":
@@ -136,7 +140,7 @@ export function notify(element, ...args) {
 
   switch (element) {
     case "score":
-      p.textContent = `Good job, you earned ${points} more point(s)!`;
+      p.textContent = `You are ${points} point(s) closer to being a responsible adult!`;
       break;
 
     case "wallet":
