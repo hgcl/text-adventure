@@ -57,8 +57,20 @@ After walking past a park, you get to a (squarish) roundabout built around a ver
 After a few hours of wandering (or was it only thirty minutes?), you suddenly walk in front of a very familiar food stall. 
 
 Oh my, you made it — you are actually on the food street!`,
-  scene6: `TODO`,
-  scene7: `TODO`,
+  scene6: `You identify the famous noodle soup stall from far away. It is surrounded by motorbikes.
+
+As you get closer, the smell of the broth becomes stronger. This breakfast stall has been open for three decades (as your uncle told you), serving phở to people on their way to work and other early risers.
+
+Everyone is sitting at a tiny plastic table on a tiny plastic chair. They eat quickly, stooped above their hot noodle soup. 
+
+At the front of the shop, an old lady is prepping the bowls: some soybean sprouts at the bottom of the bowl, a handful of noodles, a few pieces of meat, a ladle of broth, some herbs on top, and off it goes to the table.
+
+The lady looks quite frail, she is half your size and at least three times your age. She is also very intimidating.`,
+  scene7: `You slowly walk towards the old lady. She looks back at you with frightening eyes. With one finger up, you silently mouth the words "one bowl". She nods and points towards an empty table.
+
+You sit down and wait no more than two minutes before a steaming bowl of phở lands in front of you. Mimicking your neighbors, you add some more fresh herbs on top, a bit of lime, and dive in. 
+
+After slurping your last noodle, you finally take your head out of your bowl. The lady is looking at you with a satisfied smile. You smile back and...`,
   scene8: `TODO`,
 };
 
@@ -69,7 +81,6 @@ Oh my, you made it — you are actually on the food street!`,
 export const scenes = {
   // // TEST SCENE1
   // scene1: {
-  //   id: "scene1",
   //   location: "Scene 1: Test",
   //   description: [
   //     "This is a test scene {{remember|remember-map|showMap(this)}}.",
@@ -77,26 +88,27 @@ export const scenes = {
   //   choices: [
   //     {
   //       name: "Late start",
+  //       money: 30,
+  //       points: 1,
   //       inventory: { name: "an item", points: 2 },
   //       specialAction: "lateStart",
-  //       next: ["scene0"],
+  //       next: { default: "scene0" },
   //     },
   //   ],
   // },
   // // TEST SCENE0
   // scene0: {
-  //   id: "scene0",
   //   location: "Scene 0: Test",
-  //   description: ["This is a test scene {{1}}{{2}}{{3}}."],
+  //   description: ["This is a test scene {{1|1|function()}}{{2|2|function()}}."],
   //   choices: [
   //     {
   //       name: "Empty inventory",
   //       specialAction: "emptyInventory",
-  //       next: ["scene1"],
+  //       next: { default: "scene1" },
   //     },
   //     {
   //       name: "Go to scene 1",
-  //       next: ["scene1"],
+  //       next: { default: "scene1" },
   //     },
   //   ],
   // },
@@ -193,35 +205,58 @@ export const scenes = {
       },
     ],
   },
-  // Scene 6: Pho stall (still open)
+  // Scene 6: Pho stall (open)
   scene6: {
-    location: "Pho stall",
+    location: "Phở stall",
     description: [descriptions.scene6],
     choices: [
       {
-        name: "TODO",
-        next: { default: "scene8" },
+        name: "Be brave and (try to) order a bowl.",
+        money: -30,
+        next: { default: "scene7" },
+      },
+      {
+        name: "Nope, nevermind. This doesn't even look so good.",
+        next: { default: "scene9" },
       },
     ],
   },
-  // Scene 7: Pho stall (closed)
+  // Scene 7: Pho stall (order)
   scene7: {
-    location: "Pho stall (closed)",
+    location: "Phở stall",
     description: [descriptions.scene7],
     choices: [
       {
-        name: "TODO",
-        next: { default: "scene8" },
+        name: "order a portion to-go (30,000 VND).",
+        money: -30,
+        inventory: { name: "a phở portion", points: 5 },
+        next: { default: "scene10" },
+      },
+      {
+        name: "leave the store, happy and full.",
+        next: { default: "scene10" },
       },
     ],
   },
+  // Scene 8: Pho stall (closed)
   scene8: {
     location: "TODO",
     description: [descriptions.scene8],
     choices: [
       {
         name: "TODO",
-        next: { default: "scene9" },
+        next: { default: "scene10" },
+      },
+    ],
+  },
+  // Scene 9: Banh mi stall
+  scene9: {
+    location: "TODO",
+    description: [descriptions.scene9],
+    choices: [
+      {
+        name: "TODO",
+        next: { default: "scene10" },
       },
     ],
   },
