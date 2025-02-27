@@ -25,7 +25,7 @@ const closeDialogBtn = dialogEl.querySelector("#close");
  * Generate new scene
  */
 function newScene() {
-  console.log("===> NEW SCENE: " + scene.location);
+  console.log("=== NEW SCENE: " + scene.location + " ===");
 
   // Clear all previous choices
   choicesEl.replaceChildren();
@@ -104,14 +104,60 @@ closeDialogBtn.addEventListener("click", () => {
 // For all scenes: show next description on click
 let descriptionIndex = 0;
 function nextDescription(button) {
+  console.log(`> Next scene (clicked on ${button.id})`);
   buttonToText(button);
   descriptionIndex += 1;
   updateScene("description", scene, descriptionIndex);
 
   // Reset `descriptionIndex` to 0 if it's the last description of the array (for a scene)
-  if (scene.description.length === descriptionIndex + 1) {
+  if (descriptionIndex === scene.description.length - 1) {
     descriptionIndex = 0;
     showAllChoices();
+  }
+}
+
+// For all scenes: select "inline" option in a scene
+// TODO is there a better way to do write this function?
+function selectOption(button) {
+  // Array of "success" options that lead to next description
+  const successOptions = ["5b-left", "5c-left", "5d-4th", "5d-4th", "11b-slow"];
+  const lastSuccessOption = ["5e-familiar", "11c-stop"];
+
+  let newPoints = 0;
+
+  // If right direction
+  if (successOptions.includes(button.id)) {
+    console.log(`> Successful option (${button.id})`);
+    newPoints += 1;
+    // sent to next description
+    descriptionIndex += 1;
+  } else if (lastSuccessOption.includes(button.id)) {
+    console.log(`> Last successful option (${button.id})`);
+    showAllChoices();
+    // sent to final "success" description (last in array)
+    descriptionIndex = scene.description.length - 1;
+  } else {
+    // If wrong direction
+    console.log(`> Wrong option (${button.id})`);
+    // sent to "fail" description (second to last in array)
+    descriptionIndex = scene.description.length - 2;
+  }
+
+  buttonToText(button);
+  updateScene("description", scene, descriptionIndex);
+
+  // Delete other non-selected options
+  const descriptionId = button.id.split("-")[0].trim(); // descriptionId is "5a" for id "5a-straight"
+  const altOptions = document.querySelectorAll(`[id^="${descriptionId}"]`); // TODO is this supported by most browsers?
+  altOptions.forEach((option) => {
+    option.remove();
+  });
+
+  // Save new points and notify player
+  if (newPoints > 0) {
+    player.addPoints(newPoints);
+    notify("score", newPoints);
+    updatePlayer("score", player);
   }
 }
 
@@ -128,7 +174,7 @@ function lateStart() {
   gameProps.lateStart = true;
 }
 
-// Scene 4: remember map
+// Scene 5: remember map
 function showMap(buttonEl) {
   // Open modal and "cancel" button
   dialogEl.showModal();
@@ -160,43 +206,6 @@ function showMap(buttonEl) {
   // TODO => add text for screen reader
 }
 
-// Scene 4: choose direction
-// TODO is there a better way to do write this function?
-function chooseWay(button) {
-  let newPoints = 0;
-
-  // If right direction
-  if (["5b-left", "5c-left", "5d-4th", "5d-4th"].includes(button.id)) {
-    buttonToText(button);
-    descriptionIndex += 1; // sent to next description
-    newPoints += 1;
-  } else if (button.id === "5e-familiar") {
-    buttonToText(button);
-    descriptionIndex = 6; // sent to final "success" description
-    showAllChoices();
-  } else {
-    // If wrong direction
-    descriptionIndex = 5; // sent to "lost" description
-  }
-
-  // Update scene based on descriptionIndex
-  updateScene("description", scene, descriptionIndex);
-
-  // Delete other non-selected options
-  const descriptionId = button.id.split("-")[0].trim(); // descriptionId is "5a" for id "5a-straight"
-  const altOptions = document.querySelectorAll(`[id^="${descriptionId}"]`); // TODO is this supported by most browsers?
-  altOptions.forEach((option) => {
-    option.remove();
-  });
-
-  // Save new points and notify player
-  if (newPoints > 0) {
-    player.addPoints(newPoints);
-    notify("score", newPoints);
-    updatePlayer("score", player);
-  }
-}
-
 /**
  * Launch the game
  * Make some variables/functions available globally
@@ -212,4 +221,4 @@ window.nextDescription = nextDescription;
 window.incrementAge = incrementAge;
 window.lateStart = lateStart;
 window.showMap = showMap;
-window.chooseWay = chooseWay;
+window.selectOption = selectOption;

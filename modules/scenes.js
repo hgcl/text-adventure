@@ -14,7 +14,7 @@ The plan? Pretty simple: get a delicious breakfast, a cup of dark coffee (as adu
 Should be easy... right?`,
   scene2a: `As your uncle slowly shakes your hand, you are feeling ectatic. Eye in the eye, he finally acknowledges your adulthood. The day before, you actually didn't really believe that it was going to be so eas-...
 
-{{pidibideep pidibideep|2-ring|nextDescription(this)}}`,
+{{pidibideep pidibideep|2a-ring|nextDescription(this)}}`,
   scene2b: `Uncle? What's happening? Wha-...
 
 Ugh, it's your damn alarm clock, and it's six in the morning. The day hasn't even started yet.
@@ -39,19 +39,19 @@ You start by going...
 {{straight|5a-straight|nextDescription(this)}}`,
   scene5b: `... but quickly need to get around a line of motorbikes parked in front of you. You jump over a pile of trash, blocking your way in front of the post office. From there, you decide to go...
 
-{{straight|5b-straight|chooseWay(this)}} {{left|5b-left|chooseWay(this)}} {{right|5b-right|chooseWay(this)}}`,
+{{straight|5b-straight|selectOption(this)}} {{left|5b-left|selectOption(this)}} {{right|5b-right|selectOption(this)}}`,
   scene5c: `... and continue straight — or as straight as you can. You measure that you can only walk up to five meters on the sidewalk before encountering a new obstacle. 
 
 As you are looking at your feet, a giant tree appears in front of you. You go...
 
-{{straight|5c-straight|chooseWay(this)}} {{left|5c-left|chooseWay(this)}} {{right|5c-right|chooseWay(this)}}`,
+{{straight|5c-straight|selectOption(this)}} {{left|5c-left|selectOption(this)}} {{right|5c-right|selectOption(this)}}`,
   scene5d: `Nice, you still recognize your surroundings. At this point, you've just given up on the sidewalk and now walk directly on the road.
 
 After walking past a park, you get to a (squarish) roundabout built around a very socialist-looking statue. It has four other roads branching out from the centre. Counting from the left, you take the...
 
-{{1st street|5d-1st|chooseWay(this)}} {{2nd street|5d-2nd|chooseWay(this)}} {{3rd street|5d-3rd|chooseWay(this)}} {{4th street|5d-4th|chooseWay(this)}}`,
+{{1st street|5d-1st|selectOption(this)}} {{2nd street|5d-2nd|selectOption(this)}} {{3rd street|5d-3rd|selectOption(this)}} {{4th street|5d-4th|selectOption(this)}}`,
   // TODO make scene5e a bit longer
-  scene5e: `This street looks very {{familiar|5e-familiar|chooseWay(this)}}...`,
+  scene5e: `This street looks very {{familiar|5e-familiar|selectOption(this)}}...`,
   scene5f: `You walk, and walk, and walk, but you still can't find your way. You are definitely and properly lost. 
   
   After a few hours of wandering (or was it only thirty minutes?), you suddenly walk in front of a very {{familiar food stall|5f-familiar|nextDescription(this)}}.`,
@@ -94,15 +94,14 @@ The flow of vehicles seems unending. As you wait for a traffic break, you see a 
 You hesitate, and finally put down a first foot {{on the road|11a-start|nextDescription(this)}}.`,
   scene11b: `Three motorbikes are going to cut your way. 
 
-{{You stop in your tracks.|11b-stop|crossStreet(this)}} {{You slow down slightly.|11b-slow|crossStreet(this)}}`,
+{{You stop in your tracks.|11b-stop|selectOption(this)}} {{You slow down slightly.|11b-slow|selectOption(this)}}`,
   scene11c: `The two first motorbikes comfortably pass in front of you, the third one adjusts its course and swerves behind you.
 
 A car is now coming your way, loudly honking.
 
-{{You stop in your tracks.|11c-stop|crossStreet(this)}} {{You slow down slightly.|11c-slow|crossStreet(this)}}`,
-  scene11d: `You get to the end of the crosswalk — still in one piece! You feel exhilarated as you bounce to the café.`,
-  // TODO scene11e, if wrong move
-  scene11e: `TODO`,
+{{You stop in your tracks.|11c-stop|selectOption(this)}} {{You slow down slightly.|11c-slow|selectOption(this)}}`,
+  scene11d: `Motorbikes and cars violently brake to avoid hitting you. They start honking, all looking at you with angry faces. You finally regain your senses and {{run to the other side|11d-run|nextDescription(this)}}.`,
+  scene11e: `You get to the end of the crosswalk — still in one piece! You feel exhilarated as you bounce to the café.`,
   scene12: `TODO`,
 };
 
@@ -115,13 +114,13 @@ export const scenes = {
   // scene1: {
   //   location: "Scene 1: Test",
   //   description: [
-  //     descriptions.scene5a,
-  //     descriptions.scene5b,
-  //     descriptions.scene5c,
-  //     descriptions.scene5d,
-  //     descriptions.scene5e,
-  //     // if wrong turn:
-  //     descriptions.scene5f,
+  //     descriptions.scene11a,
+  //     descriptions.scene11b,
+  //     descriptions.scene11c,
+  //     // if wrong move:
+  //     descriptions.scene11d,
+  //     // final scene:
+  //     descriptions.scene11e,
   //   ],
   //   choices: [
   //     {
@@ -328,8 +327,9 @@ export const scenes = {
       descriptions.scene11a,
       descriptions.scene11b,
       descriptions.scene11c,
+      // if wrong move:
       descriptions.scene11d,
-      // If wrong move
+      // final scene:
       descriptions.scene11e,
     ],
     choices: [
