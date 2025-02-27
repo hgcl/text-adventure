@@ -18,7 +18,7 @@ let gameProps = {};
 
 const choicesEl = document.getElementById("choices");
 const dialogEl = document.getElementById("dialog");
-const dialogContentEl = document.getElementById("content");
+const dialogContentEl = dialogEl.querySelector("#content");
 const closeDialogBtn = dialogEl.querySelector("#close");
 
 /**
