@@ -12,6 +12,7 @@ Tomorrow morning, you'll finally prove to him that you are not as helpless as a 
 The plan? Pretty simple: get a delicious breakfast, a cup of dark coffee (as adults drink), and basically survive the morning all by yourself.
 
 Should be easy... right?`,
+  // TODO, scene 2, add click on "pidibideep"
   scene2: `As your uncle slowly shakes your hand, you are feeling ectatic. Eye in the eye, he finally acknowledges your adulthood. The day before, you actually didn't really believe that it was going to be so eas-...
 
 _...pidibideep pidibideep..._
@@ -52,6 +53,7 @@ After walking past a park, you get to a (squarish) roundabout built around a ver
 
 {{1st street|5d-1st|chooseWay(this)}} {{2nd street|5d-2nd|chooseWay(this)}} {{3rd street|5d-3rd|chooseWay(this)}} {{4th street|5d-4th|chooseWay(this)}}`,
   scene5e: `This street looks very familiar... Oh my, you made it — you are actually on the food street!`,
+  // TODO scene5f, add click on word "lost"
   scene5f: `You walk, and walk, and walk, but you still can't find your way. You are definitely and properly lost.
 
 After a few hours of wandering (or was it only thirty minutes?), you suddenly walk in front of a very familiar food stall. 
@@ -71,7 +73,23 @@ The lady looks quite frail, she is half your size and at least three times your 
 You sit down and wait no more than two minutes before a steaming bowl of phở lands in front of you. Mimicking your neighbors, you add some more fresh herbs on top, a bit of lime, and dive in. 
 
 After slurping your last noodle, you finally take your head out of your bowl. The lady is looking at you with a satisfied smile. You smile back and...`,
-  scene8: `TODO`,
+  // TODO add click on "find another breakfast"
+  scene8: `The famous phở stall seems to be properly closed. Only a few napkins and noodles lying on the ground hint to how popular the stall was just a few hours ago.
+
+{{Find another breakfast}}
+
+You find a bánh mì shop with thousands of reviews just down the street.`,
+  scene9: `You were lucky that this bánh mì shop was so close to the noodle stall. It looks very modern, complete with a logo and full menu in English. 
+
+They sell those bánh mì — or Vietnamese sandwiches — that you usually see everywhere. However, the prices are quite inflated compared to what your uncle got you a few days ago.
+
+As you hesitate to find a cheaper breakfast somewhere else, your belly starts to rumble. Well, you'll just order a...`,
+  scene10: `The bánh mì is small but crunchy, juicy, and full of flavor. You can never go wrong with a bánh mì.
+
+But now that your belly is full and your head is clear, you feel a bit bad not trying to find another breakfast option. You might have fallen into a tourist trap, paying three times the regular bánh mì price.
+
+At least, you'll learn from this lesson... you think?`,
+  scene11: `TODO`,
 };
 
 /**
@@ -227,7 +245,7 @@ export const scenes = {
     description: [descriptions.scene7],
     choices: [
       {
-        name: "order a portion to-go (30,000 VND).",
+        name: "order another portion to go (30,000 VND).",
         money: -30,
         inventory: { name: "a phở portion", points: 5 },
         next: { default: "scene10" },
@@ -240,23 +258,56 @@ export const scenes = {
   },
   // Scene 8: Pho stall (closed)
   scene8: {
-    location: "TODO",
+    location: "Phở stall",
     description: [descriptions.scene8],
     choices: [
       {
-        name: "TODO",
+        name: "Walk down the street",
         next: { default: "scene10" },
       },
     ],
   },
-  // Scene 9: Banh mi stall
+  // Scene 9: Banh mi shop
   scene9: {
-    location: "TODO",
+    location: "Bánh mì shop",
     description: [descriptions.scene9],
     choices: [
       {
-        name: "TODO",
+        name: "bánh mì with egg (45,000 VND)",
+        money: -45,
         next: { default: "scene10" },
+      },
+      {
+        name: "bánh mì with pâté and egg (60,000 VND)",
+        money: -60,
+        next: { default: "scene10" },
+      },
+      {
+        name: "BEST SELLER: bánh mì with caramelized pork (70,000 VND)",
+        money: -70,
+        next: { default: "scene10" },
+      },
+    ],
+  },
+  // Scene 10: Banh mi shop (eating)
+  scene10: {
+    location: "Bánh mì shop",
+    description: [descriptions.scene10],
+    choices: [
+      {
+        name: "Go find coffee",
+        next: { default: "scene11" },
+      },
+    ],
+  },
+  // Scene 11: Crosswalk
+  scene11: {
+    location: "In front of a crosswalk",
+    description: [descriptions.scene11],
+    choices: [
+      {
+        name: "Action here",
+        next: { default: "scene12" },
       },
     ],
   },
