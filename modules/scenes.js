@@ -50,11 +50,12 @@ As you are looking at your feet, a giant tree appears in front of you. You go...
 After walking past a park, you get to a (squarish) roundabout built around a very socialist-looking statue. It has four other roads branching out from the centre. Counting from the left, you take the...
 
 {{1st street|5d-1st|chooseWay(this)}} {{2nd street|5d-2nd|chooseWay(this)}} {{3rd street|5d-3rd|chooseWay(this)}} {{4th street|5d-4th|chooseWay(this)}}`,
-  scene5e: `This street looks very familiar... Oh my, you made it — you are actually on the food street!`,
-  scene5f: `You walk, and walk, and walk, but you still can't find your way. You are definitely and properly {{lost|5f-lost|nextDescription(this)}}.`,
-  scene5g: `After a few hours of wandering (or was it only thirty minutes?), you suddenly walk in front of a very familiar food stall. 
-
-Oh my, you made it — you are actually on the food street!`,
+  // TODO make scene5e a bit longer
+  scene5e: `This street looks very {{familiar|5e-familiar|chooseWay(this)}}...`,
+  scene5f: `You walk, and walk, and walk, but you still can't find your way. You are definitely and properly lost. 
+  
+  After a few hours of wandering (or was it only thirty minutes?), you suddenly walk in front of a very {{familiar food stall|5f-familiar|nextDescription(this)}}.`,
+  scene5g: `Oh my, you made it — you are actually on the food street!`,
   scene6: `You identify the famous noodle soup stall from far away. It is surrounded by motorbikes.
 
 As you get closer, the smell of the broth becomes stronger. This breakfast stall has been open for three decades (as your uncle told you), serving phở to people on their way to work and other early risers.
@@ -84,7 +85,25 @@ As you hesitate to find a cheaper breakfast somewhere else, your belly starts to
 But now that your belly is full and your head is clear, you feel a bit bad not trying to find another breakfast option. You might have fallen into a tourist trap, paying three times the regular bánh mì price.
 
 At least, you'll learn from this lesson... you think?`,
-  scene11: `TODO`,
+  scene11a: `Now that your breakfast mission is completed, all that's left is finding coffee.
+
+Good news: you see a cute café across the street. Bad news: you need to actually cross the street.
+
+The flow of vehicles seems unending. As you wait for a traffic break, you see a young man confidently walk across the street a bit further up. 
+
+You hesitate, and finally put down a first foot {{on the road|11a-start|nextDescription(this)}}.`,
+  scene11b: `Three motorbikes are going to cut your way. 
+
+{{You stop in your tracks.|11b-stop|crossStreet(this)}} {{You slow down slightly.|11b-slow|crossStreet(this)}}`,
+  scene11c: `The two first motorbikes comfortably pass in front of you, the third one adjusts its course and swerves behind you.
+
+A car is now coming your way, loudly honking.
+
+{{You stop in your tracks.|11c-stop|crossStreet(this)}} {{You slow down slightly.|11c-slow|crossStreet(this)}}`,
+  scene11d: `You get to the end of the crosswalk — still in one piece! You feel exhilarated as you bounce to the café.`,
+  // TODO scene11e, if wrong move
+  scene11e: `TODO`,
+  scene12: `TODO`,
 };
 
 /**
@@ -215,6 +234,7 @@ export const scenes = {
       descriptions.scene5e,
       // if wrong turn:
       descriptions.scene5f,
+      // final scene:
       descriptions.scene5g,
     ],
     choices: [
@@ -304,11 +324,29 @@ export const scenes = {
   // Scene 11: Crosswalk
   scene11: {
     location: "In front of a crosswalk",
-    description: [descriptions.scene11],
+    description: [
+      descriptions.scene11a,
+      descriptions.scene11b,
+      descriptions.scene11c,
+      descriptions.scene11d,
+      // If wrong move
+      descriptions.scene11e,
+    ],
+    choices: [
+      {
+        name: "Go to the café",
+        next: { default: "scene12" },
+      },
+    ],
+  },
+  // Scene 12: Café
+  scene12: {
+    location: "Café",
+    description: [descriptions.scene12],
     choices: [
       {
         name: "Action here",
-        next: { default: "scene12" },
+        next: { default: "scene13" },
       },
     ],
   },

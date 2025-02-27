@@ -166,26 +166,17 @@ function chooseWay(button) {
   let newPoints = 0;
 
   // If right direction
-  if (["5b-left", "5c-left", "5d-4th"].includes(button.id)) {
+  if (["5b-left", "5c-left", "5d-4th", "5d-4th"].includes(button.id)) {
     buttonToText(button);
-
-    switch (button.id) {
-      case "5b-left":
-        descriptionIndex = 2;
-        newPoints += 1;
-        break;
-      case "5c-left":
-        descriptionIndex = 3;
-        newPoints += 1;
-        break;
-      case "5d-4th":
-        descriptionIndex = 4;
-        newPoints += 3;
-        break;
-    }
+    descriptionIndex += 1; // sent to next description
+    newPoints += 1;
+  } else if (button.id === "5e-familiar") {
+    buttonToText(button);
+    descriptionIndex = 6; // sent to final "success" description
+    showAllChoices();
   } else {
     // If wrong direction
-    descriptionIndex = 5;
+    descriptionIndex = 5; // sent to "lost" description
   }
 
   // Update scene based on descriptionIndex
