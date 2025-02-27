@@ -48,8 +48,8 @@ export function updateScene(element, ...args) {
       scene.choices.forEach((choice, i) => {
         let btn = document.createElement("button");
         btn.textContent = choice.name;
-        // If choice is to be hidden by default
-        if (choice.hideUntilEnd) {
+        // Hide choice by default if there are multiple descriptions for one scene. We can later display them with `showAllChoices()`
+        if (scene.description.length > 1) {
           btn.setAttribute("hidden", "true");
         }
         // Append a class name to choices with special actions

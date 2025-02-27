@@ -12,12 +12,10 @@ Tomorrow morning, you'll finally prove to him that you are not as helpless as a 
 The plan? Pretty simple: get a delicious breakfast, a cup of dark coffee (as adults drink), and basically survive the morning all by yourself.
 
 Should be easy... right?`,
-  // TODO, scene 2, add click on "pidibideep"
-  scene2: `As your uncle slowly shakes your hand, you are feeling ectatic. Eye in the eye, he finally acknowledges your adulthood. The day before, you actually didn't really believe that it was going to be so eas-...
+  scene2a: `As your uncle slowly shakes your hand, you are feeling ectatic. Eye in the eye, he finally acknowledges your adulthood. The day before, you actually didn't really believe that it was going to be so eas-...
 
-_...pidibideep pidibideep..._
-
-Uncle? What's happening? Wha-...
+{{pidibideep pidibideep|2-ring|nextDescription(this)}}`,
+  scene2b: `Uncle? What's happening? Wha-...
 
 Ugh, it's your damn alarm clock, and it's six in the morning. The day hasn't even started yet.
 
@@ -38,7 +36,7 @@ From the middle of the road, you didn't realize how difficult it was to walk in 
 
 You start by going...
 
-{{straight|5a-straight|chooseWay(this)}}`,
+{{straight|5a-straight|nextDescription(this)}}`,
   scene5b: `... but quickly need to get around a line of motorbikes parked in front of you. You jump over a pile of trash, blocking your way in front of the post office. From there, you decide to go...
 
 {{straight|5b-straight|chooseWay(this)}} {{left|5b-left|chooseWay(this)}} {{right|5b-right|chooseWay(this)}}`,
@@ -53,10 +51,8 @@ After walking past a park, you get to a (squarish) roundabout built around a ver
 
 {{1st street|5d-1st|chooseWay(this)}} {{2nd street|5d-2nd|chooseWay(this)}} {{3rd street|5d-3rd|chooseWay(this)}} {{4th street|5d-4th|chooseWay(this)}}`,
   scene5e: `This street looks very familiar... Oh my, you made it — you are actually on the food street!`,
-  // TODO scene5f, add click on word "lost"
-  scene5f: `You walk, and walk, and walk, but you still can't find your way. You are definitely and properly lost.
-
-After a few hours of wandering (or was it only thirty minutes?), you suddenly walk in front of a very familiar food stall. 
+  scene5f: `You walk, and walk, and walk, but you still can't find your way. You are definitely and properly {{lost|5f-lost|nextDescription(this)}}.`,
+  scene5g: `After a few hours of wandering (or was it only thirty minutes?), you suddenly walk in front of a very familiar food stall. 
 
 Oh my, you made it — you are actually on the food street!`,
   scene6: `You identify the famous noodle soup stall from far away. It is surrounded by motorbikes.
@@ -68,12 +64,11 @@ Everyone is sitting at a tiny plastic table on a tiny plastic chair. They eat qu
 At the front of the shop, an old lady is prepping the bowls: some soybean sprouts at the bottom of the bowl, a handful of noodles, a few pieces of meat, a ladle of broth, some herbs on top, and off it goes to the table.
 
 The lady looks quite frail, she is half your size and at least three times your age. She is also very intimidating.`,
-  scene7: `You slowly walk towards the old lady. She looks back at you with frightening eyes. With one finger up, you silently mouth the words "one bowl". She nods and points towards an empty table.
-
-You sit down and wait no more than two minutes before a steaming bowl of phở lands in front of you. Mimicking your neighbors, you add some more fresh herbs on top, a bit of lime, and dive in. 
+  scene7a: `You slowly walk towards the old lady. She looks back at you with frightening eyes. With one finger up, you silently mouth the words {{one bowl|7a-order|nextDescription(this)}}.`,
+  scene7b: `She nods and points towards an empty table. You sit down and wait no more than two minutes before a steaming bowl of phở lands in front of you. Mimicking your neighbors, you add some more fresh herbs on top, a bit of lime, and dive in. 
 
 After slurping your last noodle, you finally take your head out of your bowl. The lady is looking at you with a satisfied smile. You smile back and...`,
-  // TODO add click on "find another breakfast"
+  // TODO scene8: add special action to display phone dialog
   scene8: `The famous phở stall seems to be properly closed. Only a few napkins and noodles lying on the ground hint to how popular the stall was just a few hours ago.
 
 {{Find another breakfast}}
@@ -101,7 +96,13 @@ export const scenes = {
   // scene1: {
   //   location: "Scene 1: Test",
   //   description: [
-  //     "This is a test scene {{remember|remember-map|showMap(this)}}.",
+  //     descriptions.scene5a,
+  //     descriptions.scene5b,
+  //     descriptions.scene5c,
+  //     descriptions.scene5d,
+  //     descriptions.scene5e,
+  //     // if wrong turn:
+  //     descriptions.scene5f,
   //   ],
   //   choices: [
   //     {
@@ -145,7 +146,7 @@ export const scenes = {
   // Scene 2: Waking up
   scene2: {
     location: "Uncle's house",
-    description: [descriptions.scene2],
+    description: [descriptions.scene2a, descriptions.scene2b],
     choices: [
       {
         name: "Snooze",
@@ -214,12 +215,12 @@ export const scenes = {
       descriptions.scene5e,
       // if wrong turn:
       descriptions.scene5f,
+      descriptions.scene5g,
     ],
     choices: [
       {
         name: "Find some food",
         next: { default: "scene6", lateStart: "scene7" },
-        hideUntilEnd: true,
       },
     ],
   },
@@ -242,7 +243,7 @@ export const scenes = {
   // Scene 7: Pho stall (order)
   scene7: {
     location: "Phở stall",
-    description: [descriptions.scene7],
+    description: [descriptions.scene7a, descriptions.scene7b],
     choices: [
       {
         name: "order another portion to go (30,000 VND).",

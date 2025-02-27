@@ -101,6 +101,20 @@ closeDialogBtn.addEventListener("click", () => {
  * Special actions (called through normal choices or inside of descriptions)
  */
 
+// For all scenes: show next description on click
+let descriptionIndex = 0;
+function nextDescription(button) {
+  buttonToText(button);
+  descriptionIndex += 1;
+  updateScene("description", scene, descriptionIndex);
+
+  // Reset `descriptionIndex` to 0 if it's the last description of the array (for a scene)
+  if (scene.description.length === descriptionIndex + 1) {
+    descriptionIndex = 0;
+    showAllChoices();
+  }
+}
+
 // Scene 1: increment and save the player age
 function incrementAge() {
   const ageEl = document.getElementById("player-age");
@@ -147,45 +161,42 @@ function showMap(buttonEl) {
 }
 
 // Scene 4: choose direction
+// TODO is there a better way to do write this function?
 function chooseWay(button) {
   let newPoints = 0;
 
   // If right direction
-  if (["5a-straight", "5b-left", "5c-left", "5d-4th"].includes(button.id)) {
+  if (["5b-left", "5c-left", "5d-4th"].includes(button.id)) {
     buttonToText(button);
 
     switch (button.id) {
-      case "5a-straight":
-        updateScene("description", scene, 1);
-        break;
       case "5b-left":
-        updateScene("description", scene, 2);
+        descriptionIndex = 2;
         newPoints += 1;
         break;
       case "5c-left":
-        updateScene("description", scene, 3);
+        descriptionIndex = 3;
         newPoints += 1;
         break;
       case "5d-4th":
-        updateScene("description", scene, 4);
+        descriptionIndex = 4;
         newPoints += 3;
-        showAllChoices();
         break;
     }
   } else {
     // If wrong direction
-    updateScene("description", scene, 5);
-    showAllChoices();
-
-    // Create new tag
-    const newTag = document.createElement("em");
-    newTag.textContent = button.textContent;
-
-    // Replace old button
-    const parentNode = button.parentNode;
-    parentNode.textContent = "";
-    parentNode.appendChild(newTag);
+    descriptionIndex = 5;
   }
+
+  // Update scene based on descriptionIndex
+  updateScene("description", scene, descriptionIndex);
+
+  // Delete other non-selected options
+  const descriptionId = button.id.split("-")[0].trim(); // descriptionId is "5a" for id "5a-straight"
+  const altOptions = document.querySelectorAll(`[id^="${descriptionId}"]`); // TODO is this supported by most browsers?
+  altOptions.forEach((option) => {
+    option.remove();
+  });
 
   // Save new points and notify player
   if (newPoints > 0) {
@@ -204,6 +215,7 @@ newScene();
 
 window.player = player;
 window.gameProps = gameProps;
+window.nextDescription = nextDescription;
 
 // Special action functions
 window.incrementAge = incrementAge;
