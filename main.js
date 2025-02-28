@@ -1,5 +1,5 @@
 import { Character } from "./modules/classes.js";
-import { scenes } from "./modules/scenes.js";
+import { scenes } from "./modules/scenario.js";
 import { map } from "./modules/map.js";
 import {
   updateScene,
