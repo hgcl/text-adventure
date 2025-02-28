@@ -1,4 +1,17 @@
 /**
+ * Game class
+ */
+export class Game {
+  constructor(currScene, props) {
+    this.currScene = currScene;
+    this.props = props;
+  }
+  addProp(prop) {
+    this.props.push(prop);
+  }
+}
+
+/**
  * Character class
  */
 export class Character {

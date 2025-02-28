@@ -1,10 +1,12 @@
 const choicesEl = document.getElementById("choices");
 
 /**
+ * UPDATE SCENE UI:
  * Function that updates the DOM for every new scene
+ * e.g. scene location, description, choices
  */
 
-export function updateScene(element, ...args) {
+export function updateSceneUI(element, ...args) {
   const sceneEl = document.getElementById("scene");
   const locationEl = document.getElementById("location");
   const descriptionEl = document.getElementById("description");
@@ -29,13 +31,13 @@ export function updateScene(element, ...args) {
       }
       const descriptionArray = scene.description[index].split(/\n\n/);
       descriptionArray.forEach((line) => {
-        // Replace `{{xxx}}` placeholders with actual buttons
+        // Replace `{{xxx}}` placeholders with HTML tags for buttons
         // the 3 captured groups are (1) the button label, (2) the id, (3) the function it calls
         line = line.replaceAll(
           /{{(.*?)\|(.*?)\|(.*?)}}/g,
           `<button id="$2" onclick="$3;">$1<\/button>`
         );
-        // Replace `_xxx_` placeholders with empasized tag
+        // Replace `_xxx_` placeholders with empasized HTML tag
         line = line.replaceAll(/_(.*?)_/g, `<em>$1<\/em>`);
         let p = document.createElement("p");
         p.innerHTML = line;
@@ -44,33 +46,32 @@ export function updateScene(element, ...args) {
       break;
 
     case "choices":
-      // Create a button for each choice and record its index number in `data-index`
-      scene.choices.forEach((choice, i) => {
+      // Create a button for each choice
+      scene.choices.forEach((choice) => {
         let btn = document.createElement("button");
         btn.textContent = choice.name;
         // Hide choice by default if there are multiple descriptions for one scene. We can later display them with `showAllChoices()`
         if (scene.description.length > 1) {
           btn.setAttribute("hidden", "true");
         }
-        // Append a class name to choices with special actions
+        // Add a class name to choices with special actions
         let specialAction = choice.specialAction;
         if (specialAction) {
           btn.setAttribute("onclick", `${specialAction}();`);
         }
         choicesEl.appendChild(btn);
-        // Record choice index number in `data-index` attribute
-        btn.setAttribute("data-index", i);
       });
       break;
   }
 }
 
 /**
- * Function that updates the DOM for player-related info
- * e.g. inventory, score, wallet
+ * UPDATE STATS UI:
+ * - Function that updates the DOM for player stats info
+ * - e.g. inventory, score, wallet
  */
 
-export function updatePlayer(element, ...args) {
+export function updateStatsUI(element, ...args) {
   const scoreEl = document.getElementById("score");
   const inventoryEl = document.getElementById("inventory");
   const walletEl = document.getElementById("wallet");
@@ -102,8 +103,9 @@ export function updatePlayer(element, ...args) {
 }
 
 /**
- * Transform one-use buttons into normal text
- * where `buttonEl` is the HTML element found in the DOM
+ * BUTTON TO TEXT:
+ * - Function that transforms buttons into normal text after one use
+ * - where `buttonEl` is the HTML element found in the DOM
  */
 
 export function buttonToText(buttonEl) {
@@ -113,7 +115,8 @@ export function buttonToText(buttonEl) {
 }
 
 /**
- * Show all choices that had a `hidden` attribute
+ * SHOW ALL CHOICES:
+ * - Function that displays all choices that had a `hidden` attribute by default
  */
 
 export function showAllChoices() {
@@ -123,12 +126,12 @@ export function showAllChoices() {
 }
 
 /**
- * Show modal that shows: earned points, earned/used money
- * TODO: where to show dialog on screen
- * TODO: add focus for screen reader
+ * SHOW NOTIFICATION:
+ * - Function that shows a modal with: earned points, earned/used money
+ * - TODO: add focus for screen reader
  */
 
-export function notify(element, ...args) {
+export function showNotification(element, ...args) {
   const notificationEl = document.getElementById("notification");
 
   let points = args[0];
