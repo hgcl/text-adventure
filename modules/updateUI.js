@@ -134,6 +134,7 @@ export function showAllChoices() {
 export function showNotification(element, ...args) {
   const notificationEl = document.getElementById("notification");
 
+  let item = args[0];
   let points = args[0];
   let money = args[0];
 
@@ -142,6 +143,10 @@ export function showNotification(element, ...args) {
   let p = document.createElement("p");
 
   switch (element) {
+    case "inventory":
+      p.textContent = `You now have ${item}!`;
+      break;
+
     case "score":
       p.textContent = `You are ${points} point(s) closer to being a responsible adult!`;
       break;

@@ -74,8 +74,6 @@ choicesEl.addEventListener("click", (e) => {
   if (newPoints !== undefined) {
     console.log("+" + newPoints + " point(s)");
     player.addPoints(newPoints);
-
-    // Show points in modal
     showNotification("score", newPoints);
   }
 
@@ -84,15 +82,14 @@ choicesEl.addEventListener("click", (e) => {
   if (newItems !== undefined) {
     console.log("+ " + newItems.name);
     player.addItem(newItems);
+    showNotification("inventory", newItems.name);
   }
 
   // Earn or spend money?
   const moneyAmount = selectedChoice.money;
   if (moneyAmount !== undefined) {
-    console.log("Money earned/spent: " + moneyAmount);
+    console.log("Money used: " + moneyAmount + " k");
     player.useMoney(moneyAmount);
-
-    // Show money used in modal
     showNotification("wallet", moneyAmount);
   }
 
