@@ -12,21 +12,21 @@
     />
   </head>
   <body>
-    <div id="scene">
+    <section id="scene">
       <h1 id="location"></h1>
       <div id="description"></div>
       <div id="choices"></div>
-    </div>
-    <p style="margin-top: 50px">
-      In your pockets: <span id="inventory"></span>
-    </p>
-    <p>In your wallet: <span id="wallet"></span></p>
-    <p>Your adult score: <span id="score">0</span> point(s)</p>
+    </section>
+    <section id="stats">
+      <p>In your pockets: <span id="inventory"></span></p>
+      <p>In your wallet: <span id="wallet"></span></p>
+      <p>Your adult score: <span id="score">0</span> point(s)</p>
+    </section>
     <dialog id="dialog" role="dialog">
       <button id="close" autofocus>Close</button>
       <p id="content"></p>
     </dialog>
-    <div id="notification" style="border: solid" hidden></div>
+    <div id="notification" hidden></div>
     <noscript>You need to enable JavaScript to run this game.</noscript>
     <script type="module" src="main.js"></script>
   </body>
