@@ -6,28 +6,20 @@ import { descriptions } from "./descriptions.js";
 
 export const scenes = {
   // // TEST SCENE1
-  // scene1: {
-  //   location: "Scene 1: Test",
-  //   description: [
-  //     descriptions.scene11a,
-  //     descriptions.scene11b,
-  //     descriptions.scene11c,
-  //     // if wrong move:
-  //     descriptions.scene11d,
-  //     // final scene:
-  //     descriptions.scene11e,
-  //   ],
-  //   choices: [
-  //     {
-  //       name: "Late start",
-  //       money: 30,
-  //       points: 1,
-  //       inventory: { name: "an item", points: 2 },
-  //       specialAction: "lateStart",
-  //       next: { default: "scene0" },
-  //     },
-  //   ],
-  // },
+  scene1: {
+    location: "Scene 1: Test",
+    description: [descriptions.scene8a, descriptions.scene8b],
+    choices: [
+      {
+        name: "Late start",
+        money: 30,
+        points: 1,
+        inventory: { name: "an item", points: 2 },
+        specialAction: "lateStart",
+        next: { default: "scene0" },
+      },
+    ],
+  },
   // // TEST SCENE0
   // scene0: {
   //   location: "Scene 0: Test",
@@ -46,16 +38,16 @@ export const scenes = {
   // },
   //************************************************************//
   // Scene 1: Introduction
-  scene1: {
-    location: "Uncle's house",
-    description: [descriptions.scene1],
-    choices: [
-      {
-        name: "Easy peasy",
-        next: { default: "scene2" },
-      },
-    ],
-  },
+  // scene1: {
+  //   location: "Uncle's house",
+  //   description: [descriptions.scene1],
+  //   choices: [
+  //     {
+  //       name: "Easy peasy",
+  //       next: { default: "scene2" },
+  //     },
+  //   ],
+  // },
   // Scene 2: Waking up
   scene2: {
     location: "Uncle's house",
@@ -133,8 +125,8 @@ export const scenes = {
     ],
     choices: [
       {
-        name: "Find some food",
-        next: { default: "scene6", lateStart: "scene7" },
+        name: "Go get food",
+        next: { default: "scene6", lateStart: "scene8" },
       },
     ],
   },
@@ -174,7 +166,7 @@ export const scenes = {
   // Scene 8: Pho stall (closed)
   scene8: {
     location: "Phở stall",
-    description: [descriptions.scene8],
+    description: [descriptions.scene8a, descriptions.scene8b],
     choices: [
       {
         name: "Walk down the street",

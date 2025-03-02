@@ -70,11 +70,10 @@ The lady looks quite frail, she is half your size and at least three times your 
 
 After slurping your last noodle, you finally take your head out of your bowl. The lady is looking at you with a satisfied smile. You smile back and...`,
   // TODO scene8: add special action to display phone dialog
-  scene8: `The famous phở stall seems to be properly closed. Only a few napkins and noodles lying on the ground hint to how popular the stall was just a few hours ago.
+  scene8a: `The famous phở stall seems to be properly closed. Only a few napkins and noodles lying on the ground hint to how popular the stall was just a few hours ago.
 
-{{Find another breakfast}}
-
-You find a bánh mì shop with thousands of reviews just down the street.`,
+{{Find another breakfast|8-phone|showPhone(this)}}`,
+  scene8b: `You find a bánh mì shop with thousands of reviews just down the street.`,
   scene9: `You were lucky that this bánh mì shop was so close to the noodle stall. It looks very modern, complete with a logo and full menu in English. 
 
 They sell those bánh mì — or Vietnamese sandwiches — that you usually see everywhere. However, the prices are quite inflated compared to what your uncle got you a few days ago.

@@ -9,6 +9,7 @@ import {
   incrementAge,
   lateStart,
   showMap,
+  showPhone,
   nextDescription,
   selectOption,
 } from "./modules/specialActions.js";
@@ -126,4 +127,5 @@ window.nextDescription = nextDescription;
 window.incrementAge = incrementAge;
 window.lateStart = lateStart;
 window.showMap = showMap;
+window.showPhone = showPhone;
 window.selectOption = selectOption;

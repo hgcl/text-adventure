@@ -1,4 +1,4 @@
-import { map } from "./map.js";
+import { map, review } from "./drawings.js";
 import { buttonToText, showAllChoices, updateSceneUI } from "./updateUI.js";
 
 /**
@@ -131,4 +131,28 @@ export function showMap(buttonEl) {
   pre.textContent = map;
   dialogContentEl.appendChild(pre);
   // TODO => add text for screen reader
+}
+
+/**
+ * SCENE 8:
+ * show phone with banh mi shop result
+ */
+
+export function showPhone(buttonEl) {
+  const dialogEl = document.getElementById("dialog");
+  const dialogContentEl = dialogEl.querySelector("#content");
+
+  // Open modal and "cancel" button
+  dialogEl.showModal();
+  buttonToText(buttonEl);
+
+  // Reset content element
+  dialogContentEl.textContent = "";
+
+  // Add content to modal
+  let pre = document.createElement("pre");
+  pre.textContent = review;
+  dialogContentEl.appendChild(pre);
+
+  showAllChoices();
 }
